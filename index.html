@@ -908,7 +908,7 @@
     .btn-sea { background-color: var(--teal); color: #06231C; box-shadow: 0 8px 22px -6px rgba(61, 171, 148, 0.55); }
     .btn-sea:hover { filter: brightness(1.06); }
     ::selection { background: var(--rose-soft); }
-    .hero-solid-inset { background: linear-gradient(180deg, var(--rose-tint), transparent 60%), var(--navy-soft); }
+    /* (rose wash removed 2026-11-20: it made the hero panel note unreadable — white text on light rose; story section keeps its own rose wash) */
   
     /* LIQUID GREEN (owner 2026-11-19 — Islah posts' green+blue, less blue; same technique as AIDE lab bffeba2) */
     body::before, body::after { content: ""; position: fixed; inset: -90px; z-index: -1; pointer-events: none; }
@@ -958,6 +958,7 @@
 <!-- TEAM 2026-11-20: full bios (read-more) + card polish -->
 <!-- SIGNATURE PROGRAMMES 2026-11-20: 6 programmes on Programmes page -->
 <!-- TEXT FIXES 2026-11-20: bigger/clearer type, واٹس ایپ, عزكى -->
+<!-- STAT COUNT-UP 2026-11-20 -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -2142,7 +2143,7 @@
                     <div class="stats-grid">
                       ${t.hero.stats.map(s => `
                         <div class="stat-item">
-                          <span class="stat-number" dir="ltr">${s.num}</span>
+                          <span class="stat-number" dir="ltr" data-count="${parseInt(s.num, 10)}" data-suffix="${s.num.indexOf('+') > -1 ? '+' : ''}">${s.num}</span>
                           <span class="stat-label">${s.label}</span>
                         </div>
                       `).join('')}
@@ -2675,6 +2676,35 @@
       /* ----------------------------------------------------------------------
          7. MASTER RENDER & EVENT BINDINGS
          ---------------------------------------------------------------------- */
+      // Stat count-up (2026-11-20): hero figures 0 -> target on scroll into view, once.
+      let statObserver = null;
+      function initStatCountUp() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // final values stay
+        if (!('IntersectionObserver' in window)) return;
+        if (statObserver) statObserver.disconnect();
+        statObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            statObserver.unobserve(el);
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            if (!target) return;
+            el.textContent = '0' + suffix;
+            const dur = 1200, t0 = performance.now();
+            const tick = (now) => {
+              const p = Math.min((now - t0) / dur, 1);
+              const eased = 1 - Math.pow(1 - p, 3); // cubic ease-out
+              el.textContent = Math.round(target * eased) + suffix;
+              if (p < 1) requestAnimationFrame(tick);
+              else el.textContent = target + suffix;
+            };
+            requestAnimationFrame(tick);
+          });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('.stat-number[data-count]').forEach((el) => statObserver.observe(el));
+      }
+
       function renderAll() {
         const t = CONTENT[currentLang];
         document.documentElement.lang = currentLang;
@@ -2721,6 +2751,9 @@
           case 'contact': mainEl.innerHTML = renderContactView(t); break;
           default: mainEl.innerHTML = renderHomeView(t); break;
         }
+
+        // Stat count-up (figures animate when scrolled into view)
+        initStatCountUp();
 
         // Subscribe strip
         document.getElementById('sub-heading').textContent = t.subscribe.title;
