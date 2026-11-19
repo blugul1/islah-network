@@ -961,6 +961,7 @@
 <!-- STAT COUNT-UP 2026-11-20 -->
 <!-- ADK TEXT MATCH 2026-11-20: root 18px, body ink #2E2A26 -->
 <!-- PLATFORM SPELLING 2026-11-20: پلیٹفارم -> پلیٹ فارم (6x) -->
+<!-- TOGGLE ONCE FIX 2026-11-20: team read-more listener bound once -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -2869,16 +2870,19 @@
             renderAll();
           });
         });
-        /* Team read-more toggle (2026-11-20) — delegation survives route re-renders */
-        document.addEventListener('click', function (e) {
-          const btn = e.target.closest ? e.target.closest('.team-more') : null;
-          if (!btn) return;
-          const box = btn.parentElement.querySelector('.team-fullbio');
-          if (!box) return;
-          const open = box.hidden;
-          box.hidden = !open;
-          btn.textContent = open ? btn.dataset.less : btn.dataset.more;
-        });
+        /* Team read-more toggle (2026-11-20) — delegation survives route re-renders; bound ONCE (bindDynamicPageEvents runs on every render, so an unguarded addEventListener would stack and toggle N times — after an even number of renders the button stopped working; caught by the 10x audit 20 Nov) */
+        if (!window.__islahTeamToggleBound) {
+          window.__islahTeamToggleBound = true;
+          document.addEventListener('click', function (e) {
+            const btn = e.target.closest ? e.target.closest('.team-more') : null;
+            if (!btn) return;
+            const box = btn.parentElement.querySelector('.team-fullbio');
+            if (!box) return;
+            const open = box.hidden;
+            box.hidden = !open;
+            btn.textContent = open ? btn.dataset.less : btn.dataset.more;
+          });
+        }
         const donateBtn = document.getElementById('donate-whatsapp-btn');
         if (donateBtn) {
           donateBtn.addEventListener('click', () => {
