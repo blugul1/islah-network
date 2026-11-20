@@ -948,6 +948,65 @@
     footer { background: linear-gradient(155deg, #0E3B2E 0%, #0E3B2E 30%, #0B192C 88%); }
     @media (prefers-reduced-motion: reduce) { body::before, body::after { animation: none; } }
     @media (prefers-reduced-transparency: reduce) { body::before, body::after { display: none; } .solid-card { background-color: var(--bg-surface); } }
+
+    /* PREMIUM STAGE 1 2026-11-21 — reveal, marquee, floating actions, FAQ, card polish */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .marquee { overflow: hidden; background: linear-gradient(90deg, #0E3B2E, #1F7A67 50%, #0E3B2E); border-block: 1px solid rgba(201,162,39,.45); }
+    .marquee-track { display: flex; width: max-content; animation: marquee-scroll 32s linear infinite; padding: .75rem 0; }
+    .marquee-track span { color: #F5E9D2; font-weight: 700; white-space: nowrap; padding: 0 1.25rem; }
+    @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .fab-wa { position: fixed; bottom: 20px; inset-inline-end: 20px; z-index: 70; width: 58px; height: 58px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(0,0,0,.28); text-decoration: none; }
+    .fab-wa::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(37,211,102,.55); animation: fab-pulse 2.2s ease-out infinite; pointer-events: none; }
+    @keyframes fab-pulse { 0% { transform: scale(.85); opacity: 1; } 100% { transform: scale(1.25); opacity: 0; } }
+    .fab-top { position: fixed; bottom: 20px; inset-inline-start: 20px; z-index: 70; width: 46px; height: 46px; border-radius: 50%; background: #10233D; color: #FAF8F3; border: 1px solid rgba(201,162,39,.5); font-size: 1.2rem; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .fab-top.show { opacity: 1; pointer-events: auto; }
+    .faq-item { border: 1px solid var(--border-subtle); border-radius: 14px; background: var(--bg-surface); margin-bottom: .7rem; overflow: hidden; }
+    .faq-q { width: 100%; text-align: start; background: none; border: 0; padding: 1rem 1.15rem; font-family: inherit; font-size: 1rem; font-weight: 700; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-q .faq-chev { color: var(--gold); transition: transform .3s ease; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-chev { transform: rotate(180deg); }
+    .faq-a { padding: 0 1.15rem 1.1rem; color: var(--text-secondary); }
+    .solid-card { transition: transform .35s ease, box-shadow .35s ease; }
+    .glass-frame:hover > .solid-card { transform: translateY(-4px); box-shadow: 0 18px 34px rgba(16,35,61,.16); }
+    .old-photo { transition: transform .6s ease; }
+    .glass-frame:hover .old-photo { transform: scale(1.03); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .marquee-track { animation: none; } .fab-wa::after { animation: none; display: none; } }
+
+    /* PREMIUM STAGE 2a 2026-11-21 — booking wizard + calendar + time chips */
+    .bk-steps { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+    .bk-step-ind { flex: 1; text-align: center; font-size: .85rem; color: var(--text-muted); border-top: 3px solid var(--border-subtle); padding-top: .5rem; cursor: default; }
+    .bk-step-ind.active { color: var(--text-primary); border-color: var(--gold); font-weight: 700; }
+    .bk-step-ind.done { color: var(--teal); border-color: var(--teal); cursor: pointer; }
+    .bk-step-num { display: inline-block; width: 1.5rem; height: 1.5rem; line-height: 1.5rem; border-radius: 50%; background: var(--bg-surface-alt); border: 1px solid var(--border-subtle); font-family: 'Plus Jakarta Sans', sans-serif; font-size: .8rem; font-weight: 700; margin-inline-end: .3rem; }
+    .bk-step-ind.active .bk-step-num { background: var(--gold); color: #10233D; border-color: var(--gold); }
+    .bk-step-ind.done .bk-step-num { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .bk-step-panel[hidden] { display: none; }
+    .bk-nav { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: .75rem; margin-top: .5rem; }
+    .bk-cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+    .bk-cal-nav { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); font-size: 1.2rem; cursor: pointer; line-height: 1; }
+    .bk-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .3rem; }
+    .bk-cal-dow { text-align: center; font-size: .8rem; color: var(--text-muted); padding: .2rem 0; }
+    .bk-cal-day { aspect-ratio: 1; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--bg-surface); color: var(--text-primary); cursor: pointer; font-family: inherit; font-size: .95rem; }
+    .bk-cal-day:disabled { opacity: .32; cursor: default; }
+    .bk-cal-day.sel { background: var(--gold); color: #10233D; font-weight: 700; border-color: var(--gold); }
+    .bk-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .bk-chip { border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; font-family: inherit; font-size: .95rem; }
+    .bk-chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #10233D; font-weight: 700; }
+
+    /* PREMIUM STAGE 2b 2026-11-21 — programme modal + events */
+    #booking-form { scroll-margin-top: 190px; }
+    .sg-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .sg-modal[hidden] { display: none; }
+    .sg-modal-backdrop { position: absolute; inset: 0; background: rgba(11,25,44,.72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+    .sg-modal-card { position: relative; background: var(--bg-surface); color: var(--text-primary); border-radius: 18px; border-top: 3px solid var(--gold); max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 1.75rem; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+    .sg-modal-close { position: absolute; top: .75rem; inset-inline-end: .75rem; width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--bg-surface-alt); color: var(--text-primary); font-size: 1rem; cursor: pointer; }
+
+    /* PREMIUM STAGE 2c 2026-11-21 — wellbeing quiz + breathing */
+    .wb-opts { display: flex; flex-direction: column; gap: .5rem; }
+    .wb-opt { text-align: start; border: 1px solid var(--border-subtle); background: var(--bg-surface-alt); color: var(--text-primary); border-radius: 12px; padding: .7rem 1rem; cursor: pointer; font-family: inherit; font-size: .98rem; }
+    .wb-opt:hover { border-color: var(--gold); background: var(--gold-soft); }
+    .wb-breath-circle { width: 180px; height: 180px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #4FBFA7, #1F7A67 60%, #0E3B2E); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; box-shadow: 0 18px 34px rgba(16,35,61,.22); }
+    .wb-breath-circle span { font-weight: 700; }
   </style>
 <!-- ISLAH NETWORK — FINAL MERGED BUILD 2026-11-19: Design B (Calm Luxury Glass) base + Design A (Warm Editorial) story-led home & related-book references + AIDE-style dropdown booking + full bookstore. Prices verified live 19 Nov 2026. -->
 <!-- OLD-LOOK 2026-11-19: dusty-rose + sea-green + old photos applied onto merged final -->
@@ -962,6 +1021,11 @@
 <!-- ADK TEXT MATCH 2026-11-20: root 18px, body ink #2E2A26 -->
 <!-- PLATFORM SPELLING 2026-11-20: پلیٹفارم -> پلیٹ فارم (6x) -->
 <!-- TOGGLE ONCE FIX 2026-11-20: team read-more listener bound once -->
+<!-- PREMIUM STAGE 1 2026-11-21: reveal, marquee, floating actions, FAQ, card polish -->
+<!-- PREMIUM STAGE 2a 2026-11-21: calendar booking + wizard -->
+<!-- PREMIUM STAGE 2b 2026-11-21: programme detail modals + events -->
+<!-- PREMIUM STAGE 2c 2026-11-21: wellbeing self-check + breathing -->
+<!-- PREMIUM STAGE 2d 2026-11-21: blog route + About gallery -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -1053,6 +1117,21 @@
     <div class="container" id="footer-content"></div>
   </footer>
 
+  <!-- Floating actions: WhatsApp + back to top (Premium Stage 1) -->
+  <a class="fab-wa" href="https://wa.me/923488890453" target="_blank" rel="noopener" aria-label="WhatsApp — Islah Network">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.7 1.4 5.1 3.7 6.6L5 21l2.9-.7c1 .3 2 .4 3.1.4 5.5 0 10-3.9 10-8.7S17.5 3 12 3Z" fill="#fff"/><circle cx="8.5" cy="11.5" r="1.3" fill="#25D366"/><circle cx="12" cy="11.5" r="1.3" fill="#25D366"/><circle cx="15.5" cy="11.5" r="1.3" fill="#25D366"/></svg>
+  </a>
+  <button class="fab-top" id="fab-top" aria-label="↑">↑</button>
+
+  <!-- Programme detail modal (Premium Stage 2b) -->
+  <div class="sg-modal" id="sg-modal" hidden>
+    <div class="sg-modal-backdrop" data-sg-close></div>
+    <div class="sg-modal-card" role="dialog" aria-modal="true">
+      <button type="button" class="sg-modal-close" data-sg-close aria-label="✕">✕</button>
+      <div id="sg-modal-body"></div>
+    </div>
+  </div>
+
   <!-- ========================================================================
        APPLICATION DATA & SINGLE-LANGUAGE ROUTER ENGINE
        ======================================================================== -->
@@ -1082,6 +1161,7 @@
             { id: 'services', label: 'خدمات' },
             { id: 'team', label: 'ٹیم' },
             { id: 'resources', label: 'وسائل' },
+            { id: 'blog', label: 'بلاگ' },
             { id: 'contact', label: 'رابطہ' },
             { id: 'donate', label: 'عطیہ / تعاون', accent: true }
           ],
@@ -1161,11 +1241,26 @@
             signatureDesc: 'اصلاح کے نام والے تربیتی پروگرام — مفت ورکشاپ سے آغاز، کورس اور کوچنگ تک۔ اگلے بیچ کا اعلان فیس بک پیج پر ہوتا ہے۔',
             registerLabel: 'WhatsApp پر رجسٹر کریں',
             registerPrefix: 'السلام علیکم، میں اس پروگرام میں رجسٹر کرنا چاہتی ہوں: ',
+            eventsEyebrow: 'اعلانات',
+            eventsTitle: 'آنے والے پروگرام',
+            eventsDesc: 'تازہ ترین اعلان ہمیشہ فیس بک پیج پر پہلے آتا ہے — یہاں اگلے بیچوں کی جھلک ہے۔',
+            eventsNote: 'تازہ ترین اعلان فیس بک پیج پر دیکھیں',
+            eventsCta: 'بکنگ سے رجسٹر کریں',
+            detailsLabel: 'تفصیل دیکھیں',
+            ladderLabel: 'سیڑھی',
+            closeLabel: 'بند کریں',
+            events: [
+              { title: '3 A’s ورکشاپ — آگاہی، قبولیت، عمل', by: 'منزہ فاطمہ، کلینکل سائیکالوجسٹ', format: 'آن لائن، Google Meet', fee: 'مفت', status: 'اگلا بیچ — اعلان جلد' },
+              { title: 'باؤنڈری سیٹنگ کورس', by: 'منزہ فاطمہ، کلینکل سائیکالوجسٹ', format: 'آن لائن، لائیو کلاسز — 1 ماہ', fee: '2,500/-', status: 'اگلا بیچ — اعلان جلد' },
+              { title: 'Glow & Balance — لڑکیوں کی صحت و تبدیلی', by: 'اسماء غفار، ڈائٹیشن', format: 'آن لائن کوچنگ — 2.5 ماہ', fee: 'فیس اعلان کے ساتھ', status: 'اگلا بیچ — اعلان جلد' },
+              { title: 'Working Women — Balance Your Life', by: 'ڈاکٹر مہناز قمر، نیچروپیتھک نیوٹریشنسٹ', format: 'آن لائن، Zoom — 8 ورکشاپس', fee: '2,500/-', status: 'اگلا بیچ — اعلان جلد' },
+              { title: 'سفر — نتھیا گلی (سالانہ روحانی سفر)', by: 'مدرسہ اصلاح البنات، بھمبر', format: 'بھمبر سے نتھیا گلی', fee: '—', status: 'گزشتہ سفر: 4 نومبر 2026 — اگلا سفر اعلان جلد', past: true }
+            ],
             signature: [
-              { title: 'سکون', desc: 'ذہنی صحت: خود آگاہی، قبولیت اور عمل — کلینکل رہنمائی میں۔', owner: 'منزہ فاطمہ، کلینکل سائیکالوجسٹ', format: 'آن لائن، لائیو کلاسز', fee: 'مفت ورکشاپ سے آغاز؛ کورس 2,500/-', steps: 'سیڑھی: 3 A’s مفت ورکشاپ ← 30 دن Soul Reset ← باؤنڈری سیٹنگ کورس ← ون آن ون کونسلنگ' },
+              { title: 'سکون', books: [6], desc: 'ذہنی صحت: خود آگاہی، قبولیت اور عمل — کلینکل رہنمائی میں۔', owner: 'منزہ فاطمہ، کلینکل سائیکالوجسٹ', format: 'آن لائن، لائیو کلاسز', fee: 'مفت ورکشاپ سے آغاز؛ کورس 2,500/-', steps: 'سیڑھی: 3 A’s مفت ورکشاپ ← 30 دن Soul Reset ← باؤنڈری سیٹنگ کورس ← ون آن ون کونسلنگ' },
               { title: 'صحت', desc: 'خواتین کی جسمانی صحت: غذا، ہارمون، وزن، نیند اور توانائی۔', owner: 'ڈاکٹر فرحین راؤ + اسماء غفار + عزکہ نذیر', format: 'آن لائن کوچنگ + مراکز پر بالمشافہ', fee: 'مفت ورکشاپ سے آغاز؛ فیس اعلان کے ساتھ', steps: 'سیڑھی: Weight Loss to GLOW مفت ورکشاپ ← 30+ Health Re-set ← Glow & Balance کوچنگ ← Working Women سیریز' },
-              { title: 'رشتہ', desc: 'میاں بیوی: شادی سے پہلے، پہلا سال اور خاندانی ہم آہنگی۔', owner: 'سیدہ عمارہ زیدی + عمران اسلم', format: 'آن لائن + جوڑوں کی کوچنگ', fee: 'فیس اعلان کے ساتھ', steps: 'سیڑھی: مفت لائیو ← "پہلا سال" ورکشاپ ← جوڑوں کی کوچنگ (بکنگ سے)' },
-              { title: 'تربیت', desc: 'پیرنٹنگ: بچے کا غصہ، نظم اور گھر کا ماحول۔', owner: 'سیدہ عمارہ زیدی', format: 'آن لائن، 4 ہفتے کا کورس', fee: 'فیس اعلان کے ساتھ', steps: 'سیڑھی: مفت لائیو ← 4 ہفتے کا کورس ← والدین کی کوچنگ' },
+              { title: 'رشتہ', books: [1, 2, 11], desc: 'میاں بیوی: شادی سے پہلے، پہلا سال اور خاندانی ہم آہنگی۔', owner: 'سیدہ عمارہ زیدی + عمران اسلم', format: 'آن لائن + جوڑوں کی کوچنگ', fee: 'فیس اعلان کے ساتھ', steps: 'سیڑھی: مفت لائیو ← "پہلا سال" ورکشاپ ← جوڑوں کی کوچنگ (بکنگ سے)' },
+              { title: 'تربیت', books: [4], desc: 'پیرنٹنگ: بچے کا غصہ، نظم اور گھر کا ماحول۔', owner: 'سیدہ عمارہ زیدی', format: 'آن لائن، 4 ہفتے کا کورس', fee: 'فیس اعلان کے ساتھ', steps: 'سیڑھی: مفت لائیو ← 4 ہفتے کا کورس ← والدین کی کوچنگ' },
               { title: 'روشن', desc: 'شخصیت، اعتماد، آداب اور پیشہ ورانہ وقار۔', owner: 'خدیجہ نواز + سیدہ عمارہ زیدی', format: 'آن لائن، Zoom — 1 ماہ', fee: '5,000/- (ایک ماہ)', steps: 'سیڑھی: مفت لائیو (اعتماد) ← Self-Grooming کورس (1 ماہ)' },
               { title: 'بیٹی', desc: 'لڑکیوں کی تربیت: تعلیم، کردار اور ہنر۔', owner: 'سیدہ عمارہ زیدی + سدرہ بیگ + ثوبیہ نور', format: 'مدرسہ اصلاح البنات، بھمبر + آن لائن', fee: 'فیس اعلان کے ساتھ', steps: 'سیڑھی: مدرسہ ← لڑکیوں کی ویلنیس ← ہنر (سلائی مرکز)' }
             ]
@@ -1191,10 +1286,36 @@
               time: 'پسندیدہ دن / وقت',
               message: 'مختصر پیغام (اختیاری)',
               submit: 'WhatsApp پر تفصیل بھیجیں',
-              member: 'ٹیم ممبر منتخب کریں', day: 'پسندیدہ دن', timeSel: 'پسندیدہ وقت', language: 'سیشن کی زبان', mode: 'طریقہ', modeOnline: 'آن لائن', modeInPerson: 'مرکز پر ملاقات', anyMember: 'کوئی بھی دستیاب رکن', timeNote: 'پسندیدہ وقت درج کریں — حتمی وقت کی تصدیق ٹیم واٹس ایپ پر کرے گی۔', confirmTitle: 'درخواست موصول ہو گئی', confirmNote: 'یہ درخواست ہے، حتمی بکنگ نہیں۔ ٹیم واٹس ایپ پر وقت کی تصدیق کرے گی — نیچے دیا گیا بٹن دبا کر تفصیل واٹس ایپ پر بھیجیں۔', sendWa: 'واٹس ایپ پر تفصیل بھیجیں', refLabel: 'درخواست حوالہ', nameErr: 'براہِ کرم اپنا نام درج کریں۔', waErr: 'براہِ کرم درست واٹس ایپ نمبر درج کریں (10 تا 15 ہندسے)۔',
+              member: 'ٹیم ممبر منتخب کریں', day: 'پسندیدہ دن', timeSel: 'پسندیدہ وقت', language: 'سیشن کی زبان', mode: 'طریقہ', modeOnline: 'آن لائن', modeInPerson: 'مرکز پر ملاقات', anyMember: 'کوئی بھی دستیاب رکن', timeNote: 'پسندیدہ وقت درج کریں — حتمی وقت کی تصدیق ٹیم واٹس ایپ پر کرے گی۔', confirmTitle: 'درخواست موصول ہو گئی', confirmNote: 'یہ درخواست ہے، حتمی بکنگ نہیں۔ ٹیم واٹس ایپ پر وقت کی تصدیق کرے گی — نیچے دیا گیا بٹن دبا کر تفصیل واٹس ایپ پر بھیجیں۔', sendWa: 'واٹس ایپ پر تفصیل بھیجیں', refLabel: 'درخواست حوالہ', nameErr: 'براہِ کرم اپنا نام درج کریں۔', waErr: 'براہِ کرم درست واٹس ایپ نمبر درج کریں (10 تا 15 ہندسے)۔', step1: 'خدمت', step2: 'ٹیم ممبر و مرکز', step3: 'دن و وقت', step4: 'تفصیلات', next: 'اگلا', back: 'پیچھے', dayErr: 'براہِ کرم پسندیدہ دن منتخب کریں۔', timeErr: 'براہِ کرم پسندیدہ وقت منتخب کریں۔', calPrev: 'پچھلا مہینہ', calNext: 'اگلا مہینہ',
             },
             serviceOptions: ['کونسلنگ', 'تھراپی', 'فزیوتھراپی', 'غذائیت (Nutrition)', 'ڈاکٹرز ڈیسک'],
             centreOptions: ['بہاولپور', 'بھمبر', 'ٹیکسلا', 'سیالکوٹ', 'آن لائن']
+          },
+          blogPage: {
+            eyebrow: 'اصلاح کی تحریریں',
+            title: 'بلاگ — سوچ، رہنمائی، تربیت',
+            desc: 'خاندان، شادی، والدین اور ذہنی سکون پر اصلاح نیٹ ورک کی تحریریں — نئی تحریریں وقتاً فوقتاً۔',
+            author: 'اصلاح نیٹ ورک',
+            posts: [
+              { tag: 'والدین و بچے', date: '21 نومبر 2026', title: 'جب غصہ گھر کا ماحول بدل دے', body: ['غصہ ایک لمحے میں آتا ہے، مگر اس کا اثر گھنٹوں رہتا ہے۔ بچہ غصے کو الفاظ سے نہیں، ماحول سے سمجھتا ہے — جب گھر میں آواز بلند ہوتی ہے تو بچہ یہی سیکھتا ہے کہ بات منوانے کا یہی طریقہ ہے۔', 'حل غصے کو دبانا نہیں، اسے پہچاننا ہے: جب دل تیز دھڑکنے لگے، ایک لمحہ رکیں، پانی پییں، اور پھر بولیں۔ بچے کو یہ دکھائیں کہ بڑے بھی غصہ آتا ہے، مگر اسے سنبھالنا بھی آتا ہے۔ یہی تربیت ہے۔'] },
+              { tag: 'میاں بیوی', date: '21 نومبر 2026', title: 'میاں بیوی کی بات چیت: سننا بھی ایک عبادت ہے', body: ['اکثر جھگڑے اس لیے نہیں ہوتے کہ بات غلط تھی، بلکہ اس لیے کہ بات سنی نہیں گئی۔ سننا صرف کانوں کا کام نہیں — یہ دل کا کام ہے: جب شریکِ حیات بول رہا ہو تو جواب تیار کرنے کے بجائے اس کی بات کو سمجھنے کی کوشش کریں۔', 'ایک جملہ جو سب بدل دیتا ہے: «میں سمجھ رہی ہوں، بتائیں۔» یہ جملہ نہ کمزوری ہے، نہ ہار — یہ محبت کی پہلی سیڑھی ہے۔'] },
+              { tag: 'خاندان', date: '21 نومبر 2026', title: 'بچوں کے سامنے لڑائی: جو نقصان نظر نہیں آتا', body: ['بچہ لڑائی کے الفاظ بھول جاتا ہے، مگر اس کا خوف نہیں بھولتا۔ جب بچے کے سامنے آواز بلند ہوتی ہے تو اسے لگتا ہے کہ گھر ٹوٹ رہا ہے — اور وہ خود کو اس کا ذمہ دار سمجھنے لگتا ہے۔', 'اختلاف ہر گھر میں ہوتا ہے، مگر اس کا مقام بچوں کے سامنے نہیں۔ اگر لڑائی ہو ہی جائے تو بعد میں بچے کو یقین دلائیں: «امی ابو ٹھیک ہیں، اور تم محفوظ ہو۔» یہ جملہ بچے کے دل پر مرہم ہے۔'] }
+            ]
+          },
+          aboutGallery: {
+            eyebrow: 'جھلکیاں',
+            title: 'اصلاح کے کام کی جھلکیاں',
+            note: 'یہ تصاویر اصلاح کے کام کی تصویری جھلکیاں ہیں۔',
+            items: [
+              { img: 'hero', cap: 'صحنی حلقہ — مطالعہ و گفتگو' },
+              { img: 's1', cap: 'ایک سے ایک کونسلنگ' },
+              { img: 's2', cap: 'گروہی حلقہ' },
+              { img: 's4', cap: 'ضرورت مند کی دستگیری' },
+              { img: 'p1', cap: 'بچیوں کی کلاس' },
+              { img: 'p2', cap: 'سلائی سینٹر' },
+              { img: 'p3', cap: 'بالغ تعلیم' },
+              { img: 'p4', cap: 'ڈاکٹر سے مشاورت' }
+            ]
           },
           teamPage: {
             eyebrow: 'مخلص اور باصلاحیت ٹیم',
@@ -1249,6 +1370,47 @@
             affiliationsTitle: 'تعاون اور وابستگیاں',
             affiliationsText: 'اصلاح نیٹ ورک ایک آزاد فلاحی و تربیتی پلیٹ فارم ہے جو تعلیمی و طبی آگاہی کے لیے AIDE (From Awareness to Excellence) اور ADK کے ساتھ باہمی تعاون رکھتا ہے؛ تینوں اداروں کی شناخت الگ اور خود مختار ہے۔',
             copyright: '© 2026 اصلاح نیٹ ورک (Islah Network) — جملہ حقوق محفوظ ہیں۔'
+          },
+          wellbeing: {
+            eyebrow: 'خود آگاہی',
+            title: 'اپنا سکون — ابھی چیک کریں',
+            desc: 'دو مختصر چیزیں، ابھی اسی صفحے پر — اپنا سکون چیک کریں، اور ایک منٹ کی سانس کی مشق آزمائیں۔',
+            quizTitle: 'اپنا سکون چیک کریں',
+            quizIntro: 'چھ مختصر سوالات — صرف خود آگاہی کے لیے۔',
+            disclaimer: 'یہ کوئی طبی تشخیص نہیں — صرف خود آگاہی کے لیے۔ اگر پریشانی شدید ہو تو کسی ماہر سے رابطہ کریں۔',
+            qLabel: 'سوال', of: 'میں سے',
+            restart: 'دوبارہ کریں', bookCta: 'سیشن بک کریں', progCta: 'سکون پروگرام دیکھیں',
+            questions: [
+              { q: 'پچھلے دو ہفتوں میں نیند کیسی رہی؟', opts: ['اچھی', 'کبھی کبھی خراب', 'اکثر خراب'] },
+              { q: 'دل کتنی بار بے وجہ بوجھل محسوس ہوا؟', opts: ['کبھی نہیں', 'کبھی کبھی', 'اکثر'] },
+              { q: 'اپنے لیے وقت نکال پاتی ہیں؟', opts: ['آسانی سے', 'کبھی کبھی', 'مشکل سے'] },
+              { q: 'غصہ یا چڑچڑاہٹ کتنی بار آئی؟', opts: ['کم', 'کبھی کبھی', 'اکثر'] },
+              { q: 'کسی سے دل کی بات کر سکیں؟', opts: ['جی، آسانی سے', 'کبھی کبھی', 'نہیں، مشکل ہے'] },
+              { q: 'صبح اٹھ کر دن کے لیے توانائی کیسی لگتی ہے؟', opts: ['تازہ', 'ملی جلی', 'تھکی ہوئی'] }
+            ],
+            results: [
+              { title: 'سکون کی بنیاد مضبوط ہے', text: 'آپ کی ذہنی صحت کی بنیاد اچھی لگ رہی ہے — اسے برقرار رکھنے کے لیے سکون پروگرام کی مفت ورکشاپ سے آغاز کیجیے۔' },
+              { title: 'تھوڑی توجہ چاہیے', text: 'کچھ نشانیاں تھکن کی طرف اشارہ کر رہی ہیں — سکون پروگرام کی سیڑھی (مفت ورکشاپ سے آغاز) آپ کے لیے بنائی گئی ہے۔' },
+              { title: 'بات کرنا مددگار ہو سکتا ہے', text: 'نشانیاں گہری تھکن کی طرف اشارہ کر رہی ہیں — آپ اکیلی نہیں ہیں۔ کونسلنگ کی ایک نشست بک کریں، یا سکون پروگرام سے آغاز کریں۔' }
+            ],
+            breatheTitle: 'ایک منٹ سکون',
+            breatheDesc: 'ایک منٹ کی سانس کی مشق — ابھی آزمائیں۔',
+            start: 'شروع کریں', stop: 'روکیں',
+            inhale: 'سانس لیں…', hold: 'روکیں…', exhale: 'سانس چھوڑیں…',
+            done: 'مکمل — سکون محسوس ہو رہا ہے؟',
+            round: 'دور'
+          },
+          faq: {
+            eyebrow: 'سوالات و جوابات',
+            title: 'اکثر پوچھے جانے والے سوالات',
+            items: [
+              { q: 'سیشن کیسے بک کروں؟', a: 'خدمات کے صفحے پر خدمت، ٹیم ممبر، مرکز، پسندیدہ دن اور وقت منتخب کریں، پھر اپنا نام اور واٹس ایپ نمبر لکھ کر درخواست بھیجیں — ٹیم واٹس ایپ پر حتمی وقت کی تصدیق کرے گی۔' },
+              { q: 'کیا کونسلنگ کی باتیں راز میں رہتی ہیں؟', a: 'جی — ہر بات مکمل رازداری اور احترام سے سنی جاتی ہے، اور آپ کی اجازت کے بغیر کسی سے شیئر نہیں کی جاتی۔' },
+              { q: 'عطیہ کیسے دوں؟', a: 'عطیہ کے صفحے پر رقم اور طریقہ (JazzCash، Easypaisa یا بینک ٹرانسفر) منتخب کریں، پھر واٹس ایپ پر تفصیل مانگیں — اکاؤنٹ نمبر ویب سائٹ پر شائع نہیں کیے جاتے۔' },
+              { q: 'کیا خدمات صرف بھمبر میں ہیں؟', a: 'مراکز بہاولپور، بھمبر، ٹیکسلا اور سیالکوٹ میں ہیں، اور آن لائن سیشن بھی دستیاب ہیں۔' },
+              { q: 'پروگرام کی فیس کیا ہے؟', a: 'کچھ ورکشاپس مفت ہوتی ہیں (جیسے 3 A’s) اور کچھ کورسز کی فیس ہوتی ہے — ہر پروگرام کی فیس اس کے اعلان کے ساتھ بتائی جاتی ہے، اور تازہ اعلان فیس بک پیج پر ملتا ہے۔' },
+              { q: 'کیا کتابیں اصلاح سے خریدی جا سکتی ہیں؟', a: 'کتابیں AIDE سے ملتی ہیں — وسائل کے صفحے سے کتاب منتخب کریں، خریداری AIDE کے صفحے پر مکمل ہوتی ہے، اور اس کا حصہ اصلاح کے فلاحی کام میں جاتا ہے۔' }
+            ]
           }
         },
 
@@ -1269,6 +1431,7 @@
             { id: 'services', label: 'Services' },
             { id: 'team', label: 'Team' },
             { id: 'resources', label: 'Resources' },
+            { id: 'blog', label: 'Blog' },
             { id: 'contact', label: 'Contact' },
             { id: 'donate', label: 'Donate', accent: true }
           ],
@@ -1348,11 +1511,26 @@
             signatureDesc: 'Islah’s named training programmes — from a free workshop to a course and coaching. New batches are announced on our Facebook page.',
             registerLabel: 'Register on WhatsApp',
             registerPrefix: 'Assalam-o-Alaikum, I want to register for: ',
+            eventsEyebrow: 'Announcements',
+            eventsTitle: 'Upcoming Programmes',
+            eventsDesc: 'The latest announcement always appears first on the Facebook page — here is a preview of the next batches.',
+            eventsNote: 'See the latest announcement on the Facebook page',
+            eventsCta: 'Register via booking',
+            detailsLabel: 'View details',
+            ladderLabel: 'Ladder',
+            closeLabel: 'Close',
+            events: [
+              { title: 'The 3 A’s Workshop — Awareness, Acceptance, Action', by: 'Munazzah Fatima, Clinical Psychologist', format: 'Online, Google Meet', fee: 'Free', status: 'Next batch — announced soon' },
+              { title: 'Boundary Setting Course', by: 'Munazzah Fatima, Clinical Psychologist', format: 'Online, live classes — 1 month', fee: 'Rs 2,500', status: 'Next batch — announced soon' },
+              { title: 'Glow & Balance — Girls’ Wellness & Transformation', by: 'Asma Ghaffar, Dietitian', format: 'Online coaching — 2.5 months', fee: 'Fee with announcement', status: 'Next batch — announced soon' },
+              { title: 'Working Women — Balance Your Life', by: 'Dr Mehnaz Qamar, Naturopathic Nutritionist', format: 'Online, Zoom — 8 workshops', fee: 'Rs 2,500', status: 'Next batch — announced soon' },
+              { title: 'Travel with Islah — Nathia Gali (annual spiritual retreat)', by: 'Madrasa Islah-ul-Banat, Bhimber', format: 'Bhimber to Nathia Gali', fee: '—', status: 'Last trip: 4 November 2026 — next trip announced soon', past: true }
+            ],
             signature: [
-              { title: 'Sukoon', desc: 'Mental health: awareness, acceptance and action — with clinical guidance.', owner: 'Munazzah Fatima, Clinical Psychologist', format: 'Online, live classes', fee: 'Starts with a free workshop; course Rs 2,500', steps: 'Ladder: The 3 A’s free workshop → 30 Days Soul Reset → Boundary Setting course → one-to-one counselling' },
+              { title: 'Sukoon', books: [6], desc: 'Mental health: awareness, acceptance and action — with clinical guidance.', owner: 'Munazzah Fatima, Clinical Psychologist', format: 'Online, live classes', fee: 'Starts with a free workshop; course Rs 2,500', steps: 'Ladder: The 3 A’s free workshop → 30 Days Soul Reset → Boundary Setting course → one-to-one counselling' },
               { title: 'Sehat', desc: 'Women’s physical health: nutrition, hormones, weight, sleep and energy.', owner: 'Dr Farheen Rao + Asma Ghaffar + Azka Nazir', format: 'Online coaching + in person at centres', fee: 'Starts with a free workshop; fee with announcement', steps: 'Ladder: Weight Loss to GLOW free workshop → 30+ Health Re-set → Glow & Balance coaching → Working Women series' },
-              { title: 'Rishta', desc: 'Marriage: before marriage, the first year, and family harmony.', owner: 'Syeda Ammara Zaidi + Imran Aslam', format: 'Online + couples coaching', fee: 'Fee with announcement', steps: 'Ladder: free live session → “The First Year” workshop → couples coaching (via booking)' },
-              { title: 'Tarbiyat', desc: 'Parenting: a child’s anger, discipline, and the home’s atmosphere.', owner: 'Syeda Ammara Zaidi', format: 'Online, 4-week course', fee: 'Fee with announcement', steps: 'Ladder: free live session → 4-week course → parents’ coaching' },
+              { title: 'Rishta', books: [1, 2, 11], desc: 'Marriage: before marriage, the first year, and family harmony.', owner: 'Syeda Ammara Zaidi + Imran Aslam', format: 'Online + couples coaching', fee: 'Fee with announcement', steps: 'Ladder: free live session → “The First Year” workshop → couples coaching (via booking)' },
+              { title: 'Tarbiyat', books: [4], desc: 'Parenting: a child’s anger, discipline, and the home’s atmosphere.', owner: 'Syeda Ammara Zaidi', format: 'Online, 4-week course', fee: 'Fee with announcement', steps: 'Ladder: free live session → 4-week course → parents’ coaching' },
               { title: 'Roshan', desc: 'Personality, confidence, etiquette and professional presence.', owner: 'Khadija Nawaz + Syeda Ammara Zaidi', format: 'Online, Zoom — 1 month', fee: 'Rs 5,000 (one month)', steps: 'Ladder: free live session (confidence) → Self-Grooming course (1 month)' },
               { title: 'Beti', desc: 'Girls’ training: education, character and skills.', owner: 'Syeda Ammara Zaidi + Sidra Baig + Sobia Noor', format: 'Madrasa Islah-ul-Banat, Bhimber + online', fee: 'Fee with announcement', steps: 'Ladder: madrassa → girls’ wellness → skills (stitching centre)' }
             ]
@@ -1378,10 +1556,36 @@
               time: 'Preferred Day / Time',
               message: 'Short Message (Optional)',
               submit: 'Continue to WhatsApp (+92 348 8890453)',
-              member: 'Choose team member', day: 'Preferred day', timeSel: 'Preferred time', language: 'Session language', mode: 'Mode', modeOnline: 'Online', modeInPerson: 'In person at centre', anyMember: 'Any available member', timeNote: 'Preferred time only — the team will confirm the final time on WhatsApp.', confirmTitle: 'Request received', confirmNote: 'This is a request, not a confirmed booking. The team will confirm the time on WhatsApp — tap below to send the details.', sendWa: 'Send details on WhatsApp', refLabel: 'Request ref', nameErr: 'Please enter your name.', waErr: 'Please enter a valid WhatsApp number (10–15 digits).',
+              member: 'Choose team member', day: 'Preferred day', timeSel: 'Preferred time', language: 'Session language', mode: 'Mode', modeOnline: 'Online', modeInPerson: 'In person at centre', anyMember: 'Any available member', timeNote: 'Preferred time only — the team will confirm the final time on WhatsApp.', confirmTitle: 'Request received', confirmNote: 'This is a request, not a confirmed booking. The team will confirm the time on WhatsApp — tap below to send the details.', sendWa: 'Send details on WhatsApp', refLabel: 'Request ref', nameErr: 'Please enter your name.', waErr: 'Please enter a valid WhatsApp number (10–15 digits).', step1: 'Service', step2: 'Member & Centre', step3: 'Day & Time', step4: 'Details', next: 'Next', back: 'Back', dayErr: 'Please choose a preferred day.', timeErr: 'Please choose a preferred time.', calPrev: 'Previous month', calNext: 'Next month',
             },
             serviceOptions: ['Counselling', 'Therapy', 'Physiotherapy', 'Nutrition', 'Doctors Desk'],
             centreOptions: ['Bahawalpur', 'Bhimber', 'Taxila', 'Sialkot', 'Online']
+          },
+          blogPage: {
+            eyebrow: 'Islah Writing',
+            title: 'Blog — Thought, Guidance, Tarbiyat',
+            desc: 'Islah Network writing on family, marriage, parenting and peace of mind — new pieces from time to time.',
+            author: 'Islah Network',
+            posts: [
+              { tag: 'Parenting', date: '21 November 2026', title: 'When Anger Changes the Home’s Atmosphere', body: ['Anger arrives in a moment, but its effect lasts for hours. A child does not learn anger from words — she learns it from the atmosphere. When voices rise at home, the child learns that this is how to get one’s way.', 'The answer is not to suppress anger, but to recognise it: when the heart starts racing, pause for a moment, drink some water, and then speak. Show the child that adults feel anger too — and that they know how to hold it. That is tarbiyat.'] },
+              { tag: 'Marriage', date: '21 November 2026', title: 'Talking in Marriage: Listening Is Also Worship', body: ['Most arguments do not happen because something wrong was said, but because it was not heard. Listening is not only the ears’ work — it is the heart’s work: when your spouse is speaking, try to understand instead of preparing your reply.', 'One sentence changes everything: “I understand — tell me.” That sentence is neither weakness nor defeat — it is the first step of love.'] },
+              { tag: 'Family', date: '21 November 2026', title: 'Fighting in Front of Children: The Harm You Cannot See', body: ['A child forgets the words of a fight, but not its fear. When voices rise in front of a child, the child feels the home breaking — and starts blaming herself for it.', 'Every home has disagreements, but their place is not in front of the children. And if a fight does happen, reassure the child afterwards: “Mum and Dad are fine, and you are safe.” That sentence is a balm on a child’s heart.'] }
+            ]
+          },
+          aboutGallery: {
+            eyebrow: 'Glimpses',
+            title: 'Glimpses of Islah’s Work',
+            note: 'These images are illustrative glimpses of Islah’s work.',
+            items: [
+              { img: 'hero', cap: 'Courtyard circle — reading and conversation' },
+              { img: 's1', cap: 'One-to-one counselling' },
+              { img: 's2', cap: 'Group circle' },
+              { img: 's4', cap: 'Supporting someone in need' },
+              { img: 'p1', cap: 'Girls’ classroom' },
+              { img: 'p2', cap: 'Stitching centre' },
+              { img: 'p3', cap: 'Adult education' },
+              { img: 'p4', cap: 'Consultation with a doctor' }
+            ]
           },
           teamPage: {
             eyebrow: 'Dedicated Practitioners & Mentors',
@@ -1436,6 +1640,47 @@
             affiliationsTitle: 'Collaborations & Affiliations',
             affiliationsText: 'Islah Network maintains independent organisational identity while collaborating in educational and health awareness with AIDE (From Awareness to Excellence) and ADK.',
             copyright: '© 2026 Islah Network — All rights reserved.'
+          },
+          wellbeing: {
+            eyebrow: 'Self-Awareness',
+            title: 'Your Calm — Check It Now',
+            desc: 'Two short things, right here on this page — check your calm, and try a one-minute breathing exercise.',
+            quizTitle: 'Check Your Calm',
+            quizIntro: 'Six short questions — for self-awareness only.',
+            disclaimer: 'This is not a medical diagnosis — for self-awareness only. If distress is severe, please contact a professional.',
+            qLabel: 'Question', of: 'of',
+            restart: 'Try again', bookCta: 'Book a session', progCta: 'See the Sukoon programme',
+            questions: [
+              { q: 'How has your sleep been over the past two weeks?', opts: ['Good', 'Sometimes disturbed', 'Often disturbed'] },
+              { q: 'How often has your heart felt heavy for no clear reason?', opts: ['Never', 'Sometimes', 'Often'] },
+              { q: 'Do you find time for yourself?', opts: ['Easily', 'Sometimes', 'Rarely'] },
+              { q: 'How often have anger or irritability come up?', opts: ['Rarely', 'Sometimes', 'Often'] },
+              { q: 'Can you talk to someone about what is on your heart?', opts: ['Yes, easily', 'Sometimes', 'No, it is hard'] },
+              { q: 'How does your energy feel when you wake up?', opts: ['Fresh', 'Mixed', 'Tired'] }
+            ],
+            results: [
+              { title: 'A calm foundation', text: 'Your wellbeing looks steady — keep it that way with Sukoon’s free introductory workshop.' },
+              { title: 'A little attention would help', text: 'Some signs point to tiredness — Sukoon’s ladder (starting with a free workshop) was made for this.' },
+              { title: 'Talking could help', text: 'The signs point to deep tiredness — you are not alone. Book a counselling session, or start with the Sukoon programme.' }
+            ],
+            breatheTitle: 'One Minute of Calm',
+            breatheDesc: 'A one-minute breathing exercise — try it now.',
+            start: 'Start', stop: 'Stop',
+            inhale: 'Breathe in…', hold: 'Hold…', exhale: 'Breathe out…',
+            done: 'Done — feeling calmer?',
+            round: 'Round'
+          },
+          faq: {
+            eyebrow: 'Questions & Answers',
+            title: 'Frequently Asked Questions',
+            items: [
+              { q: 'How do I book a session?', a: 'On the Services page, choose a service, team member, centre, preferred day and time, then send your name and WhatsApp number — the team confirms the final time on WhatsApp.' },
+              { q: 'Is counselling confidential?', a: 'Yes — everything is heard with full privacy and respect, and never shared with anyone without your permission.' },
+              { q: 'How do I donate?', a: 'On the Donate page, choose an amount and a method (JazzCash, Easypaisa or bank transfer), then ask for details on WhatsApp — account numbers are never published on the website.' },
+              { q: 'Are services only in Bhimber?', a: 'Centres are in Bahawalpur, Bhimber, Taxila and Sialkot, and online sessions are also available.' },
+              { q: 'What is the fee for a programme?', a: 'Some workshops are free (like the 3 A’s) and some courses carry a fee — each programme’s fee is stated with its announcement, and the latest announcements are on the Facebook page.' },
+              { q: 'Can I buy books from Islah?', a: 'Books come from AIDE — pick a book on the Resources page and the purchase completes on AIDE’s page, with a share going to Islah’s welfare work.' }
+            ]
           }
         },
 
@@ -1456,6 +1701,7 @@
             { id: 'services', label: 'الخدمات' },
             { id: 'team', label: 'الفريق' },
             { id: 'resources', label: 'المصادر' },
+            { id: 'blog', label: 'المدونة' },
             { id: 'contact', label: 'تواصل معنا' },
             { id: 'donate', label: 'تبرع / دعم', accent: true }
           ],
@@ -1535,11 +1781,26 @@
             signatureDesc: 'برامج إصلاح التدريبية المميزة — من ورشة مجانية إلى دورة وتدريب. تُعلن الدفعات الجديدة على صفحتنا في فيسبوك.',
             registerLabel: 'سجّلي عبر واتساب',
             registerPrefix: 'السلام عليكم، أريد التسجيل في: ',
+            eventsEyebrow: 'الإعلانات',
+            eventsTitle: 'البرامج القادمة',
+            eventsDesc: 'يظهر أحدث إعلان أولاً على صفحة فيسبوك — وهذه لمحة عن الدفعات القادمة.',
+            eventsNote: 'شاهدي أحدث إعلان على صفحة فيسبوك',
+            eventsCta: 'سجّلي عبر الحجز',
+            detailsLabel: 'عرض التفاصيل',
+            ladderLabel: 'السلم',
+            closeLabel: 'إغلاق',
+            events: [
+              { title: 'ورشة الـ 3 A’s — الوعي والقبول والعمل', by: 'منزهة فاطمة، أخصائية نفسية سريرية', format: 'أونلاين، Google Meet', fee: 'مجانية', status: 'الدفعة القادمة — يُعلن عنها قريباً' },
+              { title: 'دورة وضع الحدود', by: 'منزهة فاطمة، أخصائية نفسية سريرية', format: 'أونلاين، دروس مباشرة — شهر واحد', fee: '2,500 روبية', status: 'الدفعة القادمة — يُعلن عنها قريباً' },
+              { title: 'Glow & Balance — صحة الفتيات والتحول', by: 'أسماء غفار، أخصائية تغذية', format: 'تدريب أونلاين — 2.5 شهر', fee: 'الرسوم مع الإعلان', status: 'الدفعة القادمة — يُعلن عنها قريباً' },
+              { title: 'المرأة العاملة — توازني حياتك', by: 'د. مهناز قمر، أخصائية تغذية طبيعية', format: 'أونلاين، زوم — 8 ورش', fee: '2,500 روبية', status: 'الدفعة القادمة — يُعلن عنها قريباً' },
+              { title: 'رحلة مع إصلاح — ناثيا غالي (الرحلة الروحية السنوية)', by: 'مدرسة إصلاح البنات، بهيمبر', format: 'من بهيمبر إلى ناثيا غالي', fee: '—', status: 'الرحلة الماضية: 4 نوفمبر 2026 — الرحلة القادمة يُعلن عنها قريباً', past: true }
+            ],
             signature: [
-              { title: 'السكينة', desc: 'الصحة النفسية: الوعي والقبول والعمل — بإرشاد سريري.', owner: 'منزهة فاطمة، أخصائية نفسية سريرية', format: 'أونلاين، دروس مباشرة', fee: 'تبدأ بورشة مجانية؛ الدورة 2,500 روبية', steps: 'المسار: ورشة الـ3 A’s المجانية ← رحلة إعادة ضبط الروح (30 يوماً) ← دورة وضع الحدود ← استشارة فردية' },
+              { title: 'السكينة', books: [6], desc: 'الصحة النفسية: الوعي والقبول والعمل — بإرشاد سريري.', owner: 'منزهة فاطمة، أخصائية نفسية سريرية', format: 'أونلاين، دروس مباشرة', fee: 'تبدأ بورشة مجانية؛ الدورة 2,500 روبية', steps: 'المسار: ورشة الـ3 A’s المجانية ← رحلة إعادة ضبط الروح (30 يوماً) ← دورة وضع الحدود ← استشارة فردية' },
               { title: 'الصحة', desc: 'صحة المرأة الجسدية: التغذية والهرمونات والوزن والنوم والطاقة.', owner: 'د. فرحين راو + أسماء غفار + عزكى نذير', format: 'تدريب أونلاين + حضورياً في المراكز', fee: 'تبدأ بورشة مجانية؛ الرسوم مع الإعلان', steps: 'المسار: ورشة «من فقدان الوزن إلى التوهج» المجانية ← إعادة ضبط الصحة بعد الثلاثين ← تدريب «التوهج والتوازن» ← سلسلة «المرأة العاملة»' },
-              { title: 'العلاقة الزوجية', desc: 'الزواج: قبل الزواج، والسنة الأولى، والانسجام الأسري.', owner: 'السيدة عمارة زيدي + عمران أسلم', format: 'أونلاين + تدريب للأزواج', fee: 'الرسوم مع الإعلان', steps: 'المسار: جلسة مباشرة مجانية ← ورشة «السنة الأولى» ← تدريب الأزواج (عبر الحجز)' },
-              { title: 'التربية', desc: 'تربية الأبناء: غضب الطفل، والانضباط، وأجواء البيت.', owner: 'السيدة عمارة زيدي', format: 'أونلاين، دورة 4 أسابيع', fee: 'الرسوم مع الإعلان', steps: 'المسار: جلسة مباشرة مجانية ← دورة 4 أسابيع ← تدريب الوالدين' },
+              { title: 'العلاقة الزوجية', books: [1, 2, 11], desc: 'الزواج: قبل الزواج، والسنة الأولى، والانسجام الأسري.', owner: 'السيدة عمارة زيدي + عمران أسلم', format: 'أونلاين + تدريب للأزواج', fee: 'الرسوم مع الإعلان', steps: 'المسار: جلسة مباشرة مجانية ← ورشة «السنة الأولى» ← تدريب الأزواج (عبر الحجز)' },
+              { title: 'التربية', books: [4], desc: 'تربية الأبناء: غضب الطفل، والانضباط، وأجواء البيت.', owner: 'السيدة عمارة زيدي', format: 'أونلاين، دورة 4 أسابيع', fee: 'الرسوم مع الإعلان', steps: 'المسار: جلسة مباشرة مجانية ← دورة 4 أسابيع ← تدريب الوالدين' },
               { title: 'الإشراق', desc: 'الشخصية والثقة والآداب والحضور المهني.', owner: 'خديجة نواز + السيدة عمارة زيدي', format: 'أونلاين، زوم — شهر واحد', fee: '5,000 روبية (شهر واحد)', steps: 'المسار: جلسة مباشرة مجانية (الثقة) ← دورة العناية بالذات والشخصية (شهر واحد)' },
               { title: 'البنات', desc: 'تربية البنات: التعليم والأخلاق والمهارات.', owner: 'السيدة عمارة زيدي + سدرة بيك + ثوبية نور', format: 'مدرسة إصلاح البنات، بهيمبر + أونلاين', fee: 'الرسوم مع الإعلان', steps: 'المسار: المدرسة ← عافية البنات ← المهارات (مركز الخياطة)' }
             ]
@@ -1565,10 +1826,36 @@
               time: 'اليوم / الوقت المفضل',
               message: 'رسالة قصيرة (اختياري)',
               submit: 'إرسال التفاصيل عبر واتساب',
-              member: 'اختر عضو الفريق', day: 'اليوم المفضل', timeSel: 'الوقت المفضل', language: 'لغة الجلسة', mode: 'الطريقة', modeOnline: 'عبر الإنترنت', modeInPerson: 'حضورياً في المركز', anyMember: 'أي عضو متاح', timeNote: 'الوقت المفضل فقط — سيؤكد الفريق الوقت النهائي عبر واتساب.', confirmTitle: 'تم استلام الطلب', confirmNote: 'هذا طلب وليس حجزاً مؤكداً. سيؤكد الفريق الوقت عبر واتساب — اضغط أدناه لإرسال التفاصيل.', sendWa: 'أرسل التفاصيل عبر واتساب', refLabel: 'مرجع الطلب', nameErr: 'يرجى إدخال الاسم.', waErr: 'يرجى إدخال رقم واتساب صحيح (10–15 رقماً).',
+              member: 'اختر عضو الفريق', day: 'اليوم المفضل', timeSel: 'الوقت المفضل', language: 'لغة الجلسة', mode: 'الطريقة', modeOnline: 'عبر الإنترنت', modeInPerson: 'حضورياً في المركز', anyMember: 'أي عضو متاح', timeNote: 'الوقت المفضل فقط — سيؤكد الفريق الوقت النهائي عبر واتساب.', confirmTitle: 'تم استلام الطلب', confirmNote: 'هذا طلب وليس حجزاً مؤكداً. سيؤكد الفريق الوقت عبر واتساب — اضغط أدناه لإرسال التفاصيل.', sendWa: 'أرسل التفاصيل عبر واتساب', refLabel: 'مرجع الطلب', nameErr: 'يرجى إدخال الاسم.', waErr: 'يرجى إدخال رقم واتساب صحيح (10–15 رقماً).', step1: 'الخدمة', step2: 'العضو والمركز', step3: 'اليوم والوقت', step4: 'التفاصيل', next: 'التالي', back: 'رجوع', dayErr: 'يرجى اختيار اليوم المفضل.', timeErr: 'يرجى اختيار الوقت المفضل.', calPrev: 'الشهر السابق', calNext: 'الشهر التالي',
             },
             serviceOptions: ['استشارات', 'علاج نفسي', 'علاج طبيعي', 'تغذية علاجية', 'مكتب الأطباء'],
             centreOptions: ['بهاولبور', 'بهيمبر', 'تاكسيلا', 'سيالكوت', 'أونلاين']
+          },
+          blogPage: {
+            eyebrow: 'كتابات إصلاح',
+            title: 'المدونة — فكر وإرشاد وتربية',
+            desc: 'كتابات شبكة إصلاح عن الأسرة والزواج والوالدية وراحة البال — مقالات جديدة من وقت لآخر.',
+            author: 'شبكة إصلاح',
+            posts: [
+              { tag: 'الوالدية', date: '21 نوفمبر 2026', title: 'عندما يغيّر الغضب أجواء البيت', body: ['يأتي الغضب في لحظة، لكن أثره يدوم ساعات. الطفل لا يتعلم الغضب من الكلمات — بل من الأجواء. عندما ترتفع الأصوات في البيت، يتعلم الطفل أن هذه هي الطريقة لفرض الرأي.', 'الحل ليس كبت الغضب، بل التعرف عليه: عندما يبدأ القلب بالخفقان، توقفي لحظة، اشربي ماءً، ثم تكلمي. أري الطفل أن الكبار يغضبون أيضاً — وأنهم يعرفون كيف يمسكون أنفسهم. هذه هي التربية.'] },
+              { tag: 'الزواج', date: '21 نوفمبر 2026', title: 'الحديث بين الزوجين: الاستماع عبادة أيضاً', body: ['معظم الخلافات لا تحدث لأن ما قيل كان خطأ، بل لأنه لم يُسمَع. الاستماع ليس عمل الأذنين فقط — بل عمل القلب: عندما يتحدث شريك حياتك، حاولي أن تفهمي بدلاً من تجهيز الرد.', 'جملة واحدة تغيّر كل شيء: «أفهم — أخبريني.» هذه الجملة ليست ضعفاً ولا هزيمة — بل هي الدرجة الأولى من المحبة.'] },
+              { tag: 'الأسرة', date: '21 نوفمبر 2026', title: 'الشجار أمام الأطفال: الضرر الذي لا يُرى', body: ['ينسى الطفل كلمات الشجار، لكنه لا ينسى خوفه. عندما ترتفع الأصوات أمام الطفل، يشعر أن البيت ينهار — ويبدأ بلوم نفسه.', 'الخلاف موجود في كل بيت، لكن مكانه ليس أمام الأطفال. وإذا حدث شجار، فطمئني الطفل بعده: «أمي وأبي بخير، وأنت بأمان.» هذه الجملة بلسم على قلب الطفل.'] }
+            ]
+          },
+          aboutGallery: {
+            eyebrow: 'لمحات',
+            title: 'لمحات من عمل إصلاح',
+            note: 'هذه الصور لمحات توضيحية من عمل إصلاح.',
+            items: [
+              { img: 'hero', cap: 'حلقة في الفناء — قراءة وحوار' },
+              { img: 's1', cap: 'إرشاد فردي' },
+              { img: 's2', cap: 'حلقة جماعية' },
+              { img: 's4', cap: 'دعم محتاج' },
+              { img: 'p1', cap: 'فصل البنات' },
+              { img: 'p2', cap: 'مركز الخياطة' },
+              { img: 'p3', cap: 'تعليم الكبار' },
+              { img: 'p4', cap: 'استشارة مع طبيبة' }
+            ]
           },
           teamPage: {
             eyebrow: 'نخبة من الكفاءات والمربيات',
@@ -1623,6 +1910,47 @@
             affiliationsTitle: 'التعاون والشراكات',
             affiliationsText: 'تحتفظ شبكة إصلاح بهويتها المؤسسية المستقلة، وتتعاون في مجالات التوعية التعليمية والصحية مع AIDE (From Awareness to Excellence) و ADK.',
             copyright: '© 2026 شبكة إصلاح (Islah Network) — جميع الحقوق محفوظة.'
+          },
+          wellbeing: {
+            eyebrow: 'الوعي الذاتي',
+            title: 'هدوؤك — افحصيه الآن',
+            desc: 'شيئان قصيران، هنا في هذه الصفحة — افحصي هدوءك، وجرّبي تمرين تنفس لمدة دقيقة.',
+            quizTitle: 'افحصي هدوءك',
+            quizIntro: 'ستة أسئلة قصيرة — للوعي الذاتي فقط.',
+            disclaimer: 'هذا ليس تشخيصاً طبياً — للوعي الذاتي فقط. إذا كان الضيق شديداً، فتواصلي مع مختص.',
+            qLabel: 'السؤال', of: 'من',
+            restart: 'حاولي مجدداً', bookCta: 'احجزي جلسة', progCta: 'شاهدي برنامج السكينة',
+            questions: [
+              { q: 'كيف كان نومك خلال الأسبوعين الماضيين؟', opts: ['جيد', 'مضطرب أحياناً', 'مضطرب غالباً'] },
+              { q: 'كم مرة شعرتِ بثقل في القلب دون سبب واضح؟', opts: ['أبداً', 'أحياناً', 'غالباً'] },
+              { q: 'هل تجدين وقتاً لنفسك؟', opts: ['بسهولة', 'أحياناً', 'نادراً'] },
+              { q: 'كم مرة ظهر الغضب أو الانفعال؟', opts: ['نادراً', 'أحياناً', 'غالباً'] },
+              { q: 'هل تستطيعين الحديث مع أحد عما في قلبك؟', opts: ['نعم، بسهولة', 'أحياناً', 'لا، صعب'] },
+              { q: 'كيف تشعرين بطاقتك عند الاستيقاظ؟', opts: ['منتعشة', 'مختلطة', 'متعبة'] }
+            ],
+            results: [
+              { title: 'أساس هادئ', text: 'تبدو صحتك النفسية مستقرة — حافظي عليها بورشة السكينة المجانية.' },
+              { title: 'تحتاجين إلى بعض الاهتمام', text: 'بعض العلامات تشير إلى الإرهاق — سلم السكينة (بدءاً بورشة مجانية) صُمم لهذا.' },
+              { title: 'قد يساعدك الحديث', text: 'العلامات تشير إلى إرهاق عميق — لست وحدك. احجزي جلسة إرشاد، أو ابدئي ببرنامج السكينة.' }
+            ],
+            breatheTitle: 'دقيقة من الهدوء',
+            breatheDesc: 'تمرين تنفس لمدة دقيقة — جرّبيه الآن.',
+            start: 'ابدئي', stop: 'أوقفي',
+            inhale: 'شهيق…', hold: 'احبسي…', exhale: 'زفير…',
+            done: 'تم — هل تشعرين بالهدوء؟',
+            round: 'الجولة'
+          },
+          faq: {
+            eyebrow: 'أسئلة وأجوبة',
+            title: 'الأسئلة الشائعة',
+            items: [
+              { q: 'كيف أحجز جلسة؟', a: 'في صفحة الخدمات، اختاري الخدمة وعضو الفريق والمركز واليوم والوقت المفضلين، ثم أرسلي الاسم ورقم واتساب — ويؤكد الفريق الوقت النهائي عبر واتساب.' },
+              { q: 'هل تبقى جلسات الإرشاد سرية؟', a: 'نعم — يُستمع إلى كل شيء بسرية واحترام كاملين، ولا يُشارك مع أحد دون إذنك.' },
+              { q: 'كيف أتبرع؟', a: 'في صفحة التبرع، اختاري المبلغ والطريقة (جاز كاش أو إيزي بيسا أو التحويل البنكي)، ثم اطلبي التفاصيل عبر واتساب — أرقام الحسابات لا تُنشر على الموقع.' },
+              { q: 'هل الخدمات في بهيمبر فقط؟', a: 'المراكز في بهاولپور وبهيمبر وتكسلا وسيالكوت، والجلسات عبر الإنترنت متاحة أيضاً.' },
+              { q: 'ما رسوم البرامج؟', a: 'بعض الورش مجانية (مثل 3 A’s) وبعض الدورات برسوم — وتُذكر رسوم كل برنامج مع إعلانه، وأحدث الإعلانات على صفحة فيسبوك.' },
+              { q: 'هل يمكن شراء الكتب من إصلاح؟', a: 'الكتب من AIDE — اختاري كتاباً في صفحة الموارد ويكتمل الشراء على صفحة AIDE، ويذهب جزء منه إلى العمل الخيري لإصلاح.' }
+            ]
           }
         }
       };
@@ -2090,7 +2418,7 @@
       /* ----------------------------------------------------------------------
          5. APPLICATION STATE & HASH ROUTING (8 DISTINCT VIEWS)
          ---------------------------------------------------------------------- */
-      const VALID_PAGES = ['home', 'about', 'programmes', 'services', 'team', 'resources', 'donate', 'contact'];
+      const VALID_PAGES = ['home', 'about', 'programmes', 'services', 'team', 'resources', 'blog', 'donate', 'contact'];
       let currentLang = 'ur';
       let currentTheme = 'light';
       let currentPage = 'home';
@@ -2163,6 +2491,13 @@
               </div>
             </div>
           </section>
+
+          <!-- Premium marquee: signature programmes -->
+          <div class="marquee" aria-hidden="true">
+            <div class="marquee-track" dir="ltr">
+              ${(() => { const items = t.programmesPage.signature.map(s => `<span>✦&nbsp;${s.title}</span>`).join(''); return items + items; })()}
+            </div>
+          </div>
 
           <!-- Story Preview -->
           <section class="page-section" style="background:linear-gradient(180deg, var(--rose-tint), var(--bg-surface-alt) 70%);border-block:1px solid var(--border-subtle);">
@@ -2239,6 +2574,77 @@
               </div>
             </div>
           </section>
+
+          <!-- Wellbeing: self-check + breathing -->
+          <section class="page-section" style="background:var(--bg-surface-alt);border-top:1px solid var(--border-subtle);">
+            <div class="container">
+              <div class="section-header">
+                <span class="eyebrow">${t.wellbeing.eyebrow}</span>
+                <h2 class="section-title">${t.wellbeing.title}</h2>
+                <p class="section-desc">${t.wellbeing.desc}</p>
+              </div>
+              <div class="grid-2">
+                <div class="glass-frame"><article class="solid-card" style="height:100%;">
+                  <h3 style="font-size:1.25rem;margin-bottom:0.4rem;">${t.wellbeing.quizTitle}</h3>
+                  <p style="color:var(--text-secondary);font-size:0.94rem;margin-bottom:1rem;">${t.wellbeing.quizIntro}</p>
+                  <div id="wb-quiz"></div>
+                  <p style="font-size:0.85rem;color:var(--text-muted);margin-top:1rem;">${t.wellbeing.disclaimer}</p>
+                </article></div>
+                <div class="glass-frame"><article class="solid-card" style="height:100%;text-align:center;">
+                  <h3 style="font-size:1.25rem;margin-bottom:0.4rem;">${t.wellbeing.breatheTitle}</h3>
+                  <p style="color:var(--text-secondary);font-size:0.94rem;margin-bottom:1.25rem;">${t.wellbeing.breatheDesc}</p>
+                  <div class="wb-breath-circle" id="wb-breath-circle"><span id="wb-breath-phase">${t.wellbeing.inhale}</span></div>
+                  <p id="wb-breath-round" style="margin-top:1rem;color:var(--text-secondary);"></p>
+                  <button type="button" class="btn btn-gold" id="wb-breath-btn">${t.wellbeing.start}</button>
+                </article></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section class="page-section">
+            <div class="container">
+              <div class="section-header">
+                <span class="eyebrow">${t.faq.eyebrow}</span>
+                <h2 class="section-title">${t.faq.title}</h2>
+              </div>
+              <div style="max-width:820px;margin-inline:auto;">
+                ${t.faq.items.map(item => `
+                  <div class="faq-item">
+                    <button class="faq-q" aria-expanded="false"><span>${item.q}</span><span class="faq-chev">▾</span></button>
+                    <div class="faq-a" hidden>${item.a}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderBlogView(t) {
+        return `
+          <div class="subpage-banner">
+            <div class="container">
+              <span class="eyebrow" style="color:var(--gold);">${t.blogPage.eyebrow}</span>
+              <h1 style="font-size:clamp(1.6rem,3.5vw,2.4rem);margin-top:0.25rem;">${t.blogPage.title}</h1>
+              <p style="color:rgba(250,248,243,0.93);margin-top:0.5rem;max-width:65ch;">${t.blogPage.desc}</p>
+            </div>
+          </div>
+
+          <section class="page-section">
+            <div class="container">
+              <div style="display:flex;flex-direction:column;gap:1.5rem;max-width:820px;margin-inline:auto;">
+                ${t.blogPage.posts.map(post => `
+                  <div class="glass-frame"><article class="solid-card">
+                    <span class="role-badge">${post.tag}</span>
+                    <span style="color:var(--text-muted);font-size:0.88rem;margin-inline-start:0.75rem;">${post.date} · ${t.blogPage.author}</span>
+                    <h2 style="font-size:1.35rem;margin:0.6rem 0 0.5rem;">${post.title}</h2>
+                    ${post.body.map(para => `<p style="color:var(--text-secondary);margin-bottom:0.75rem;">${para}</p>`).join('')}
+                  </article></div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
         `;
       }
 
@@ -2285,6 +2691,20 @@
               </div>
               <div class="grid-2">
                 ${leaders.map(m => renderTeamCardHTML(m)).join('')}
+              </div>
+
+              <div style="margin-top:2.25rem;">
+                <span class="eyebrow" style="color:var(--gold);">${t.aboutGallery.eyebrow}</span>
+                <h2 style="font-size:1.4rem;margin-top:0.25rem;margin-bottom:0.5rem;">${t.aboutGallery.title}</h2>
+                <div class="grid-4">
+                  ${t.aboutGallery.items.map(g => `
+                    <div class="glass-frame"><article class="solid-card" style="height:100%;">
+                      <img src="${OLD_PHOTOS[g.img]}" alt="" class="old-photo" style="margin-bottom:0.6rem;" />
+                      <p style="color:var(--text-secondary);font-size:0.94rem;">${g.cap}</p>
+                    </article></div>
+                  `).join('')}
+                </div>
+                <p style="margin-top:1rem;font-size:0.88rem;color:var(--text-muted);">${t.aboutGallery.note}</p>
               </div>
             </div>
           </section>
@@ -2334,7 +2754,7 @@
                 <h2 style="font-size:1.4rem;margin-top:0.25rem;margin-bottom:0.5rem;">${t.programmesPage.signatureTitle}</h2>
                 <p style="color:var(--text-secondary);max-width:70ch;margin-bottom:1.25rem;">${t.programmesPage.signatureDesc}</p>
                 <div class="grid-2">
-                  ${t.programmesPage.signature.map(function (sg) {
+                  ${t.programmesPage.signature.map(function (sg, idx) {
                     const wa = 'https://wa.me/923488890453?text=' + encodeURIComponent(t.programmesPage.registerPrefix + sg.title);
                     return `<div class="glass-frame"><article class="solid-card" style="height:100%;">
                       <h3 style="font-size:1.25rem;margin-bottom:0.35rem;">${sg.title}</h3>
@@ -2342,11 +2762,32 @@
                       <p style="margin-top:0.65rem;font-size:0.95rem;"><strong>${sg.owner}</strong> · ${sg.format}</p>
                       <p style="font-size:0.95rem;">${sg.steps}</p>
                       <p style="font-size:0.95rem;margin-top:0.4rem;"><strong>${sg.fee}</strong></p>
+                      <button type="button" class="btn btn-outline-dark sg-details" style="margin-top:0.85rem;margin-inline-end:0.5rem;" data-sg="${idx}">${t.programmesPage.detailsLabel}</button>
                       <a class="btn btn-sea" style="margin-top:0.85rem;" href="${wa}" target="_blank" rel="noopener noreferrer">${t.programmesPage.registerLabel}</a>
                     </article></div>`;
                   }).join('')}
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section class="page-section">
+            <div class="container">
+              <span class="eyebrow" style="color:var(--gold);">${t.programmesPage.eventsEyebrow}</span>
+              <h2 style="font-size:1.4rem;margin-top:0.25rem;margin-bottom:0.5rem;">${t.programmesPage.eventsTitle}</h2>
+              <p style="color:var(--text-secondary);max-width:70ch;margin-bottom:1.25rem;">${t.programmesPage.eventsDesc}</p>
+              <div class="grid-2">
+                ${t.programmesPage.events.map(ev => `
+                  <div class="glass-frame"><article class="solid-card" style="height:100%;">
+                    <span class="role-badge">${ev.status}</span>
+                    <h3 style="font-size:1.2rem;margin:0.5rem 0 0.35rem;">${ev.title}</h3>
+                    <p style="color:var(--text-secondary);">${ev.by} · ${ev.format}</p>
+                    <p style="font-size:0.95rem;margin-top:0.4rem;"><strong>${ev.fee}</strong></p>
+                    ${ev.past ? '' : `<a class="btn btn-sea" style="margin-top:0.85rem;" href="#services" data-route="services">${t.programmesPage.eventsCta}</a>`}
+                  </article></div>
+                `).join('')}
+              </div>
+              <p style="margin-top:1.25rem;color:var(--text-secondary);">${t.programmesPage.eventsNote} — <a href="https://www.facebook.com/IslahNetworkPk" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:700;">facebook.com/IslahNetworkPk</a></p>
             </div>
           </section>
         `;
@@ -2383,61 +2824,88 @@
                     ${t.servicesPage.disclaimer}
                   </div>
 
-                  <form id="booking-form" class="form-grid form-grid-2">
-                    <div class="form-group">
-                      <label for="bk-service" class="form-label">${t.servicesPage.fields.service} *</label>
-                      <select id="bk-service" class="form-control" required>
-                        ${BOOKING_SERVICES.map(sv => `<option value="${sv.id}">${BOOKING_SERVICE_LABELS[currentLang][sv.id]}</option>`).join('')}
-                      </select>
+                  <form id="booking-form">
+                    <div class="bk-steps" role="list">
+                      <div class="bk-step-ind active" data-wstep="1"><span class="bk-step-num">1</span>${t.servicesPage.fields.step1}</div>
+                      <div class="bk-step-ind" data-wstep="2"><span class="bk-step-num">2</span>${t.servicesPage.fields.step2}</div>
+                      <div class="bk-step-ind" data-wstep="3"><span class="bk-step-num">3</span>${t.servicesPage.fields.step3}</div>
+                      <div class="bk-step-ind" data-wstep="4"><span class="bk-step-num">4</span>${t.servicesPage.fields.step4}</div>
                     </div>
-                    <div class="form-group">
-                      <label for="bk-member" class="form-label">${t.servicesPage.fields.member} *</label>
-                      <select id="bk-member" class="form-control" required></select>
+                    <p id="bk-error" hidden style="color:#a33;margin:0 0 1rem;"></p>
+                    <div class="bk-step-panel form-grid form-grid-2" data-step="1">
+                      <div class="form-group" style="grid-column:1 / -1;">
+                        <label for="bk-service" class="form-label">${t.servicesPage.fields.service} *</label>
+                        <select id="bk-service" class="form-control" required>
+                          ${BOOKING_SERVICES.map(sv => `<option value="${sv.id}">${BOOKING_SERVICE_LABELS[currentLang][sv.id]}</option>`).join('')}
+                        </select>
+                      </div>
+                      <div class="bk-nav">
+                        <span></span>
+                        <button type="button" class="btn btn-gold bk-next" data-goto="2">${t.servicesPage.fields.next} →</button>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="bk-centre" class="form-label">${t.servicesPage.fields.centre} *</label>
-                      <select id="bk-centre" class="form-control" required>
-                        ${t.servicesPage.centreOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                      </select>
+                    <div class="bk-step-panel form-grid form-grid-2" data-step="2" hidden>
+                      <div class="form-group">
+                        <label for="bk-member" class="form-label">${t.servicesPage.fields.member} *</label>
+                        <select id="bk-member" class="form-control" required></select>
+                      </div>
+                      <div class="form-group">
+                        <label for="bk-centre" class="form-label">${t.servicesPage.fields.centre} *</label>
+                        <select id="bk-centre" class="form-control" required>
+                          ${t.servicesPage.centreOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                        </select>
+                      </div>
+                      <div class="bk-nav">
+                        <button type="button" class="btn btn-outline-dark bk-back" data-goto="1">← ${t.servicesPage.fields.back}</button>
+                        <button type="button" class="btn btn-gold bk-next" data-goto="3">${t.servicesPage.fields.next} →</button>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="bk-day" class="form-label">${t.servicesPage.fields.day} *</label>
-                      <select id="bk-day" class="form-control" required></select>
+                    <div class="bk-step-panel form-grid form-grid-2" data-step="3" hidden>
+                      <div class="form-group" style="grid-column:1 / -1;">
+                        <label class="form-label">${t.servicesPage.fields.day} *</label>
+                        <div id="bk-cal"></div>
+                        <input type="hidden" id="bk-day" />
+                      </div>
+                      <div class="form-group" style="grid-column:1 / -1;">
+                        <label class="form-label">${t.servicesPage.fields.timeSel} *</label>
+                        <div class="bk-chips" id="bk-time-chips"></div>
+                        <input type="hidden" id="bk-time" />
+                        <p style="font-size:0.82rem;color:var(--text-secondary);margin-top:0.35rem;">${t.servicesPage.fields.timeNote}</p>
+                      </div>
+                      <div class="bk-nav">
+                        <button type="button" class="btn btn-outline-dark bk-back" data-goto="2">← ${t.servicesPage.fields.back}</button>
+                        <button type="button" class="btn btn-gold bk-next" data-goto="4">${t.servicesPage.fields.next} →</button>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="bk-time" class="form-label">${t.servicesPage.fields.timeSel} *</label>
-                      <select id="bk-time" class="form-control" required>
-                        <option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option>
-                      </select>
-                      <p style="font-size:0.82rem;color:var(--text-secondary);margin-top:0.35rem;">${t.servicesPage.fields.timeNote}</p>
-                    </div>
-                    <div class="form-group">
-                      <label for="bk-lang" class="form-label">${t.servicesPage.fields.language}</label>
-                      <select id="bk-lang" class="form-control">
-                        <option value="Urdu">اردو</option><option value="English">English</option><option value="Arabic">العربية</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="bk-mode" class="form-label">${t.servicesPage.fields.mode}</label>
-                      <select id="bk-mode" class="form-control">
-                        <option value="Online">${t.servicesPage.fields.modeOnline}</option><option value="In person">${t.servicesPage.fields.modeInPerson}</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="bk-name" class="form-label">${t.servicesPage.fields.name} *</label>
-                      <input type="text" id="bk-name" class="form-control" required />
-                    </div>
-                    <div class="form-group">
-                      <label for="bk-whatsapp" class="form-label">${t.servicesPage.fields.whatsapp} *</label>
-                      <input type="tel" id="bk-whatsapp" class="form-control" dir="ltr" placeholder="+92 3XX XXXXXXX" required />
-                    </div>
-                    <div class="form-group" style="grid-column:1 / -1;">
-                      <label for="bk-message" class="form-label">${t.servicesPage.fields.message}</label>
-                      <input type="text" id="bk-message" class="form-control" />
-                    </div>
-                    <p id="bk-error" hidden style="grid-column:1 / -1;color:#a33;margin:0;"></p>
-                    <div style="grid-column:1 / -1;margin-top:0.5rem;">
-                      <button type="submit" class="btn btn-sea">${t.servicesPage.fields.submit}</button>
+                    <div class="bk-step-panel form-grid form-grid-2" data-step="4" hidden>
+                      <div class="form-group">
+                        <label for="bk-lang" class="form-label">${t.servicesPage.fields.language}</label>
+                        <select id="bk-lang" class="form-control">
+                          <option value="Urdu">اردو</option><option value="English">English</option><option value="Arabic">العربية</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="bk-mode" class="form-label">${t.servicesPage.fields.mode}</label>
+                        <select id="bk-mode" class="form-control">
+                          <option value="Online">${t.servicesPage.fields.modeOnline}</option><option value="In person">${t.servicesPage.fields.modeInPerson}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="bk-name" class="form-label">${t.servicesPage.fields.name} *</label>
+                        <input type="text" id="bk-name" class="form-control" required />
+                      </div>
+                      <div class="form-group">
+                        <label for="bk-whatsapp" class="form-label">${t.servicesPage.fields.whatsapp} *</label>
+                        <input type="tel" id="bk-whatsapp" class="form-control" dir="ltr" placeholder="+92 3XX XXXXXXX" required />
+                      </div>
+                      <div class="form-group" style="grid-column:1 / -1;">
+                        <label for="bk-message" class="form-label">${t.servicesPage.fields.message}</label>
+                        <input type="text" id="bk-message" class="form-control" />
+                      </div>
+                      <div class="bk-nav">
+                        <button type="button" class="btn btn-outline-dark bk-back" data-goto="3">← ${t.servicesPage.fields.back}</button>
+                        <button type="submit" class="btn btn-sea">${t.servicesPage.fields.submit}</button>
+                      </div>
                     </div>
                   </form>
                   <div id="bk-confirm" style="margin-top:1.25rem;"></div>
@@ -2708,7 +3176,55 @@
         document.querySelectorAll('.stat-number[data-count]').forEach((el) => statObserver.observe(el));
       }
 
+      let revealObserver = null;
+      function initReveal() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+          return;
+        }
+        if (!revealObserver) {
+          revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+            });
+          }, { threshold: 0.12 });
+        }
+        const mainEl = document.getElementById('main-content');
+        mainEl.querySelectorAll('section.page-section').forEach(s => s.classList.add('reveal'));
+        mainEl.querySelectorAll('.grid-4 > *').forEach((el, i) => {
+          el.classList.add('reveal');
+          el.style.transitionDelay = ((i % 4) * 70) + 'ms';
+        });
+        mainEl.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      }
+
+      function openSgModal(idx) {
+        const t = CONTENT[currentLang];
+        const sg = t.programmesPage.signature[idx];
+        if (!sg) return;
+        const bookByNum = {}; BOOKS_SHOWCASE.forEach(b => { bookByNum[b.num] = b; });
+        const steps = sg.steps.replace(/^[^:]*:\s*/, '').split(/[→←]/).map(x => x.trim()).filter(Boolean);
+        const books = (sg.books || []).map(n => bookByNum[n]).filter(Boolean);
+        const wa = 'https://wa.me/923488890453?text=' + encodeURIComponent(t.programmesPage.registerPrefix + sg.title);
+        document.getElementById('sg-modal-body').innerHTML =
+          '<h2 style="font-size:1.4rem;margin-bottom:0.4rem;">' + sg.title + '</h2>' +
+          '<p style="color:var(--text-secondary);">' + sg.desc + '</p>' +
+          '<p style="margin-top:0.75rem;"><strong>' + sg.owner + '</strong> · ' + sg.format + '</p>' +
+          '<p style="margin-top:0.4rem;"><strong>' + sg.fee + '</strong></p>' +
+          (steps.length ? '<h3 style="font-size:1.05rem;margin-top:1rem;margin-bottom:0.4rem;">' + t.programmesPage.ladderLabel + '</h3><ol style="color:var(--text-secondary);padding-inline-start:1.25rem;">' + steps.map(x => '<li style="margin-bottom:0.3rem;">' + x + '</li>').join('') + '</ol>' : '') +
+          (books.length ? '<p style="margin-top:0.9rem;font-size:0.92rem;">' + t.relatedBook + ': ' + books.map(b => '<a href="#resources" data-route="resources" style="color:var(--gold);font-weight:700;">' + b.title[currentLang] + '</a>').join('، ') + '</p>' : '') +
+          '<div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.25rem;"><a class="btn btn-sea" href="' + wa + '" target="_blank" rel="noopener noreferrer">' + t.programmesPage.registerLabel + '</a><a class="btn btn-outline-dark" href="#services" data-route="services">' + t.programmesPage.eventsCta + '</a></div>';
+        document.getElementById('sg-modal').hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSgModal() {
+        const m = document.getElementById('sg-modal');
+        if (m) m.hidden = true;
+        document.body.style.overflow = '';
+      }
+
       function renderAll() {
+        closeSgModal();
         const t = CONTENT[currentLang];
         document.documentElement.lang = currentLang;
         document.documentElement.dir = t.dir;
@@ -2750,6 +3266,7 @@
           case 'services': mainEl.innerHTML = renderServicesView(t); break;
           case 'team': mainEl.innerHTML = renderTeamView(t); break;
           case 'resources': mainEl.innerHTML = renderResourcesView(t); break;
+          case 'blog': mainEl.innerHTML = renderBlogView(t); break;
           case 'donate': mainEl.innerHTML = renderDonateView(t); break;
           case 'contact': mainEl.innerHTML = renderContactView(t); break;
           default: mainEl.innerHTML = renderHomeView(t); break;
@@ -2757,6 +3274,7 @@
 
         // Stat count-up (figures animate when scrolled into view)
         initStatCountUp();
+        initReveal();
 
         // Subscribe strip
         document.getElementById('sub-heading').textContent = t.subscribe.title;
@@ -2791,7 +3309,61 @@
         bindDynamicPageEvents(t);
       }
 
+      let wbQ = 0, wbAnswers = [], wbBreathTimer = null;
+      function renderWbQuestion() {
+        const box = document.getElementById('wb-quiz');
+        if (!box) return;
+        const w = CONTENT[currentLang].wellbeing;
+        if (wbQ >= w.questions.length) {
+          const total = wbAnswers.reduce((a, b) => a + b, 0);
+          const band = total <= 4 ? 0 : (total <= 8 ? 1 : 2);
+          const r = w.results[band];
+          box.innerHTML = '<div class="wb-result"><h4 style="font-size:1.15rem;margin-bottom:0.4rem;">' + r.title + '</h4><p style="color:var(--text-secondary);">' + r.text + '</p><div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem;"><a class="btn btn-sea" href="#services" data-route="services">' + w.bookCta + '</a><a class="btn btn-outline-dark" href="#programmes" data-route="programmes">' + w.progCta + '</a></div><button type="button" class="btn btn-outline-dark" id="wb-restart" style="margin-top:0.75rem;">' + w.restart + '</button></div>';
+          document.getElementById('wb-restart').addEventListener('click', function () { wbQ = 0; wbAnswers = []; renderWbQuestion(); });
+          return;
+        }
+        const q = w.questions[wbQ];
+        box.innerHTML = '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.4rem;">' + w.qLabel + ' ' + (wbQ + 1) + ' ' + w.of + ' ' + w.questions.length + '</p><h4 style="font-size:1.1rem;margin-bottom:0.75rem;">' + q.q + '</h4><div class="wb-opts">' + q.opts.map((o, i) => '<button type="button" class="wb-opt" data-v="' + i + '">' + o + '</button>').join('') + '</div>';
+        box.querySelectorAll('.wb-opt').forEach(function (b) {
+          b.addEventListener('click', function () { wbAnswers.push(parseInt(b.dataset.v, 10)); wbQ++; renderWbQuestion(); });
+        });
+      }
+
       function bindDynamicPageEvents(t) {
+        if (wbBreathTimer) { clearTimeout(wbBreathTimer); wbBreathTimer = null; }
+        renderWbQuestion();
+        const breathBtn = document.getElementById('wb-breath-btn');
+        if (breathBtn) {
+          const circle = document.getElementById('wb-breath-circle');
+          const phaseEl = document.getElementById('wb-breath-phase');
+          const roundEl = document.getElementById('wb-breath-round');
+          const w = CONTENT[currentLang].wellbeing;
+          let running = false, round = 0, stepIdx = 0;
+          const steps = [ { key: 'inhale', dur: 4000, scale: 1.35 }, { key: 'hold', dur: 4000, scale: 1.35 }, { key: 'exhale', dur: 6000, scale: 1 } ];
+          function breathStep() {
+            if (!running) return;
+            const st = steps[stepIdx];
+            phaseEl.textContent = w[st.key];
+            circle.style.transition = 'transform ' + st.dur + 'ms ease-in-out';
+            circle.style.transform = 'scale(' + st.scale + ')';
+            roundEl.textContent = w.round + ' ' + (round + 1) + ' ' + w.of + ' 4';
+            wbBreathTimer = setTimeout(function () {
+              stepIdx++;
+              if (stepIdx >= steps.length) { stepIdx = 0; round++; if (round >= 4) { running = false; phaseEl.textContent = w.done; breathBtn.textContent = w.start; roundEl.textContent = ''; return; } }
+              breathStep();
+            }, st.dur);
+          }
+          breathBtn.addEventListener('click', function () {
+            if (running) {
+              running = false; clearTimeout(wbBreathTimer); wbBreathTimer = null;
+              circle.style.transition = 'transform .5s ease'; circle.style.transform = 'scale(1)';
+              phaseEl.textContent = w.inhale; roundEl.textContent = ''; breathBtn.textContent = w.start;
+            } else {
+              running = true; round = 0; stepIdx = 0; breathBtn.textContent = w.stop;
+              breathStep();
+            }
+          });
+        }
         // Booking form -> WhatsApp +92 348 8890453
         const bookingForm = document.getElementById('booking-form');
         if (bookingForm) {
@@ -2804,18 +3376,95 @@
               return m ? '<option value="' + m.name[currentLang] + '">' + m.name[currentLang] + ' — ' + m.role[currentLang] + '</option>' : '';
             }).join('');
           }
-          function fillDays() {
+          // Premium calendar (Stage 2a): month grid, 60-day window, preferred day only — no fake live slots
+          let calMonth = new Date(); calMonth.setDate(1);
+          function buildCalendar() {
+            const cal = document.getElementById('bk-cal');
+            if (!cal) return;
             const loc = currentLang === 'ur' ? 'ur-PK' : (currentLang === 'ar' ? 'ar' : 'en-GB');
-            let opts = '';
-            for (let d = 0; d < 14; d++) {
-              const dt = new Date(); dt.setDate(dt.getDate() + d);
-              const iso = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
-              opts += '<option value="' + iso + '">' + dt.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long' }) + '</option>';
+            const y = calMonth.getFullYear(), m = calMonth.getMonth();
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const last = new Date(); last.setDate(last.getDate() + 59); last.setHours(0, 0, 0, 0);
+            const firstDow = (new Date(y, m, 1).getDay() + 6) % 7; // Monday-first
+            const daysInMonth = new Date(y, m + 1, 0).getDate();
+            const dowNames = [];
+            for (let i = 0; i < 7; i++) { dowNames.push(new Date(2026, 0, 5 + i).toLocaleDateString(loc, { weekday: 'short' })); }
+            let html = '<div class="bk-cal-head"><button type="button" class="bk-cal-nav" id="bk-cal-prev" aria-label="' + t.servicesPage.fields.calPrev + '">‹</button><strong>' + calMonth.toLocaleDateString(loc, { month: 'long', year: 'numeric' }) + '</strong><button type="button" class="bk-cal-nav" id="bk-cal-next" aria-label="' + t.servicesPage.fields.calNext + '">›</button></div>';
+            html += '<div class="bk-cal-grid">' + dowNames.map(n => '<div class="bk-cal-dow">' + n + '</div>').join('');
+            for (let i = 0; i < firstDow; i++) html += '<div></div>';
+            const sel = document.getElementById('bk-day').value;
+            for (let d = 1; d <= daysInMonth; d++) {
+              const dt = new Date(y, m, d);
+              const iso = y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+              const dis = dt < today || dt > last;
+              html += '<button type="button" class="bk-cal-day' + (sel === iso ? ' sel' : '') + '" data-iso="' + iso + '"' + (dis ? ' disabled' : '') + '>' + d + '</button>';
             }
-            daySel.innerHTML = opts;
+            html += '</div>';
+            cal.innerHTML = html;
+            document.getElementById('bk-cal-prev').addEventListener('click', function () {
+              const p = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1);
+              if (p >= new Date(today.getFullYear(), today.getMonth(), 1)) { calMonth = p; buildCalendar(); }
+            });
+            document.getElementById('bk-cal-next').addEventListener('click', function () {
+              const n = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1);
+              if (n <= new Date(last.getFullYear(), last.getMonth(), 1)) { calMonth = n; buildCalendar(); }
+            });
+            cal.querySelectorAll('.bk-cal-day:not([disabled])').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                document.getElementById('bk-day').value = btn.dataset.iso;
+                cal.querySelectorAll('.bk-cal-day').forEach(function (b) { b.classList.toggle('sel', b === btn); });
+              });
+            });
           }
+          function buildTimeChips() {
+            const wrap = document.getElementById('bk-time-chips');
+            if (!wrap) return;
+            ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'].forEach(function (tm) {
+              const b = document.createElement('button');
+              b.type = 'button'; b.className = 'bk-chip'; b.textContent = tm; b.setAttribute('aria-pressed', 'false');
+              b.addEventListener('click', function () {
+                document.getElementById('bk-time').value = tm;
+                wrap.querySelectorAll('.bk-chip').forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); });
+              });
+              wrap.appendChild(b);
+            });
+          }
+          // Wizard navigation (Stage 2a)
+          let bkStep = 1;
+          function showBkStep(n) {
+            bkStep = n;
+            document.querySelectorAll('.bk-step-panel').forEach(function (panel) { panel.hidden = parseInt(panel.dataset.step, 10) !== n; });
+            document.querySelectorAll('.bk-step-ind').forEach(function (ind) {
+              const k = parseInt(ind.dataset.wstep, 10);
+              ind.classList.toggle('active', k === n);
+              ind.classList.toggle('done', k < n);
+            });
+            const form = document.getElementById('booking-form');
+            if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          document.querySelectorAll('.bk-next').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              const target = parseInt(btn.dataset.goto, 10);
+              if (target === 4) {
+                const errBox = document.getElementById('bk-error');
+                if (!document.getElementById('bk-day').value) { errBox.textContent = t.servicesPage.fields.dayErr; errBox.hidden = false; return; }
+                if (!document.getElementById('bk-time').value) { errBox.textContent = t.servicesPage.fields.timeErr; errBox.hidden = false; return; }
+                errBox.hidden = true;
+              }
+              showBkStep(target);
+            });
+          });
+          document.querySelectorAll('.bk-back').forEach(function (btn) {
+            btn.addEventListener('click', function () { showBkStep(parseInt(btn.dataset.goto, 10)); });
+          });
+          document.querySelectorAll('.bk-step-ind').forEach(function (ind) {
+            ind.addEventListener('click', function () {
+              const k = parseInt(ind.dataset.wstep, 10);
+              if (k <= bkStep) showBkStep(k);
+            });
+          });
           document.getElementById('bk-service').addEventListener('change', fillMembers);
-          fillMembers(); fillDays();
+          fillMembers(); buildCalendar(); buildTimeChips();
           bookingForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const f = t.servicesPage.fields;
@@ -2831,6 +3480,8 @@
             const centre = document.getElementById('bk-centre').value;
             const day = daySel.value;
             const time = document.getElementById('bk-time').value;
+            if (!day) { errBox.textContent = f.dayErr; errBox.hidden = false; return; }
+            if (!time) { errBox.textContent = f.timeErr; errBox.hidden = false; return; }
             const lang = document.getElementById('bk-lang').value;
             const mode = document.getElementById('bk-mode').value;
             const msg = document.getElementById('bk-message').value.trim();
@@ -2989,6 +3640,18 @@
           currentTheme = themeBtn.dataset.themeBtn;
           renderAll();
         }
+
+        const sgBtn = e.target.closest('.sg-details');
+        if (sgBtn) { openSgModal(parseInt(sgBtn.dataset.sg, 10)); }
+        if (e.target.closest('[data-sg-close]')) { closeSgModal(); }
+
+        const faqBtn = e.target.closest('.faq-q');
+        if (faqBtn) {
+          const ans = faqBtn.parentElement.querySelector('.faq-a');
+          const open = faqBtn.getAttribute('aria-expanded') === 'true';
+          faqBtn.setAttribute('aria-expanded', String(!open));
+          if (ans) ans.hidden = open;
+        }
       });
 
       document.getElementById('site-search').addEventListener('input', function (e) {
@@ -3007,6 +3670,16 @@
         document.getElementById('sub-feedback').textContent = t.subscribe.success;
         document.getElementById('sub-contact').value = '';
       });
+
+      const fabTop = document.getElementById('fab-top');
+      if (fabTop) {
+        window.addEventListener('scroll', function () {
+          fabTop.classList.toggle('show', window.scrollY > 600);
+        }, { passive: true });
+        fabTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSgModal(); });
 
       window.addEventListener('hashchange', function () {
         currentPage = getRouteFromHash();
