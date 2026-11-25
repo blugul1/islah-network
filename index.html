@@ -61,18 +61,15 @@
     :root {
       --navy: #10233D;
       --navy-deep: #0B192C;
-      --navy-soft: #173154;
       --ivory: #FAF8F3;
       --gold: #C9A227;
       --gold-soft: rgba(201, 162, 39, 0.16);
       --gold-border: rgba(201, 162, 39, 0.42);
       --teal: #3DAB94;
       --teal-soft: rgba(61, 171, 148, 0.14);
-      --rose: #C4747F;
       --rose-deep: #A55763;
       --rose-tint: #FAEFED;
       --rose-soft: #F3D9D5;
-      --rosegold: #D89A7E;
 
       /* Light Theme (Default) */
       --bg-page: #FAF8F3;
@@ -108,7 +105,6 @@
     /* Dark Theme (Nocturnal Deep Navy Luxury) */
     [data-theme="dark"] {
       --bg-page: #0B192C;
-      --rose: #D89AA2;
       --rose-deep: #E3B3B9;
       --rose-tint: #33222A;
       --rose-soft: #4A2E38;
@@ -415,6 +411,11 @@
     }
     .nav-donate:hover {
       background: #d8b236;
+    }
+    .nav-link.nav-donate[aria-current="page"] {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
     }
 
     /* ==========================================================================
@@ -1026,6 +1027,7 @@
 <!-- PREMIUM STAGE 2b 2026-11-21: programme detail modals + events -->
 <!-- PREMIUM STAGE 2c 2026-11-21: wellbeing self-check + breathing -->
 <!-- PREMIUM STAGE 2d 2026-11-21: blog route + About gallery -->
+<!-- DULHAN PASS v6.1 2026-11-21: reveal threshold, donate-nav fix, dead-code cleanup -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -2310,44 +2312,6 @@
          - Dignified faceless hijabi silhouettes (no faces shown)
          - Typographic luxury book covers (no photos of people)
          ---------------------------------------------------------------------- */
-      function renderHeroIllustrationSVG(lang) {
-        const captions = {
-          ur: 'وقار • رازداری • خود آگاہی',
-          en: 'Dignity • Privacy • Self-Awareness',
-          ar: 'الوقار • الخصوصية • الوعي الذاتي'
-        };
-        return `
-          <svg viewBox="0 0 420 380" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${captions[lang]}">
-            <defs>
-              <linearGradient id="archGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#C9A227" stop-opacity="0.9"/>
-                <stop offset="100%" stop-color="#3DAB94" stop-opacity="0.7"/>
-              </linearGradient>
-              <linearGradient id="veilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#1D3E6B"/>
-                <stop offset="100%" stop-color="#0B192C"/>
-              </linearGradient>
-            </defs>
-            <!-- Islamic Pointed Arch Sanctuary -->
-            <rect x="16" y="16" width="388" height="348" rx="28" fill="#0D1E35" stroke="url(#archGold)" stroke-width="1.5"/>
-            <path d="M70 330 V165 C70 95, 210 52, 210 52 C210 52, 350 95, 350 165 V330 Z" fill="#132B4C" stroke="#C9A227" stroke-opacity="0.55" stroke-width="1.5"/>
-            <path d="M92 330 V172 C92 112, 210 74, 210 74 C210 74, 328 112, 328 172 V330" fill="none" stroke="#3DAB94" stroke-opacity="0.45" stroke-width="1.2" stroke-dasharray="4 4"/>
-            <!-- Luminous Crescent & Geometric Star -->
-            <circle cx="210" cy="112" r="22" fill="#C9A227" fill-opacity="0.14" stroke="#C9A227" stroke-width="1.2"/>
-            <path d="M215 98 A15 15 0 1 0 223 122 A12 12 0 1 1 215 98 Z" fill="#C9A227"/>
-            <!-- Dignified Faceless Hijabi Silhouette (Side/Back Three-Quarter Poise — No Face) -->
-            <path d="M148 330 C150 272, 168 242, 188 228 C177 212, 176 184, 192 168 C206 154, 228 156, 240 172 C252 188, 250 214, 242 232 C264 246, 278 276, 282 330 Z" fill="url(#veilGrad)" stroke="#C9A227" stroke-width="1.8"/>
-            <!-- Graceful Drape Fold Lines -->
-            <path d="M196 172 C186 202, 192 236, 216 258 C236 276, 242 302, 244 330" fill="none" stroke="#C9A227" stroke-opacity="0.65" stroke-width="1.4"/>
-            <path d="M234 176 C244 204, 236 234, 212 252" fill="none" stroke="#3DAB94" stroke-opacity="0.6" stroke-width="1.3"/>
-            <!-- Open Book Motif Held Gently -->
-            <path d="M174 286 Q192 278 210 288 Q228 278 246 286 L242 308 Q226 300 210 310 Q194 300 178 308 Z" fill="#FAF8F3" fill-opacity="0.92" stroke="#C9A227" stroke-width="1.4"/>
-            <!-- Bottom Caption Strip -->
-            <rect x="64" y="324" width="292" height="28" rx="14" fill="#10233D" stroke="#C9A227" stroke-opacity="0.5"/>
-            <text x="210" y="343" text-anchor="middle" fill="#FAF8F3" font-size="13" font-weight="600">${captions[lang]}</text>
-          </svg>
-        `;
-      }
 
       function renderAvatarSVG(member) {         if (member.photo) {           return `<img src="${member.photo}" width="84" height="84" style="object-fit:cover;border-radius:14px;border:1.5px solid #C9A227;display:block" alt="">`;         } // REAL-PHOTO-PATCH-2026-11-19
 
@@ -3187,7 +3151,7 @@
             entries.forEach(entry => {
               if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.01 });
         }
         const mainEl = document.getElementById('main-content');
         mainEl.querySelectorAll('section.page-section').forEach(s => s.classList.add('reveal'));
@@ -3247,7 +3211,7 @@
           btn.setAttribute('aria-pressed', btn.dataset.themeBtn === currentTheme ? 'true' : 'false');
         });
 
-        // Navigation bar (8 distinct pages)
+        // Navigation bar (9 distinct pages)
         const navEl = document.getElementById('primary-nav');
         navEl.innerHTML = t.nav.map(item => `
           <a href="#${item.id}"
