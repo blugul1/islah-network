@@ -56,7 +56,7 @@
     /* ==========================================================================
        DESIGN B: CALM LUXURY GLASS — DESIGN TOKENS & THEME SYSTEM
        Palette (Imran's scheme, 26 Nov 2026):
-       #3A806F deep green, #1165A5 mid blue, #CBD6AF sage, #CBD6D1 pale mint,
+       #007D10 deep green, #C9A86A gold (no blue), #CBD6AF sage, #CBD6D1 pale mint,
        #10233D navy (replaces the scheme's blackish 383B3A), #C9A86A gold (second after green),
        #FAF8F3 warm ivory
        ========================================================================== */
@@ -67,8 +67,8 @@
       --gold: #C9A86A;
       --gold-soft: rgba(201, 168, 106, 0.16);
       --gold-border: rgba(201, 168, 106, 0.42);
-      --teal: #1165A5;
-      --teal-soft: rgba(17, 101, 165, 0.14);
+      --teal: #007D10;
+      --teal-soft: rgba(0, 125, 16, 0.14);
       --sage: #CBD6AF;
       --mint: #CBD6D1;
       --rose-deep: #A55763;
@@ -259,7 +259,7 @@
        HEADER & UTILITY BAR
        ========================================================================== */
     .site-header {
-      background-color: #3A806F;
+      background-color: #007D10;
       color: var(--ivory);
       border-bottom: 1px solid rgba(201, 168, 106, 0.28);
       position: sticky;
@@ -457,7 +457,7 @@
     .btn-teal {
       background-color: var(--teal);
       color: #081A17;
-      box-shadow: 0 8px 22px -6px rgba(17, 101, 165, 0.42);
+      box-shadow: 0 8px 22px -6px rgba(0, 125, 16, 0.42);
     }
     .btn-teal:hover {
       background-color: #3D84B7;
@@ -485,7 +485,7 @@
        DEEP GREEN HERO SECTION (green-led, less blue — owner 2026-11-19)
        ========================================================================== */
     .hero-section {
-      background: radial-gradient(circle at 18% 18%, #1165A5 0%, #3A806F 55%, #10233D 94%, #0B192C 100%);
+      background: radial-gradient(circle at 18% 18%, #007D10 0%, #00640D 55%, #0B3D2E 100%);
       color: var(--ivory);
       padding-block: 2.75rem 3.5rem;
       position: relative;
@@ -557,7 +557,7 @@
     .stat-item {
       padding: 0.85rem 0.65rem;
       border-radius: 0.95rem;
-      background: rgba(16, 35, 61, 0.72);
+      background: rgba(11, 61, 46, 0.72);
       border: 1px solid rgba(201, 168, 106, 0.28);
     }
 
@@ -598,7 +598,7 @@
       margin-bottom: 0.35rem;
     }
     [data-theme="light"] .eyebrow, [data-theme="sand"] .eyebrow {
-      color: #1165A5;
+      color: #007D10;
     }
 
     .section-title {
@@ -818,7 +818,7 @@
       padding: 1rem 1.2rem;
       border-radius: 1rem;
       background: var(--teal-soft);
-      border: 1px solid rgba(17, 101, 165, 0.35);
+      border: 1px solid rgba(0, 125, 16, 0.35);
       color: var(--text-primary);
       font-size: 0.9rem;
     }
@@ -874,7 +874,7 @@
 
     /* Footer */
     .site-footer {
-      background: linear-gradient(155deg, #3A806F 0%, #3A806F 55%, #2E6659 100%);
+      background: linear-gradient(155deg, #007D10 0%, #007D10 55%, #00640D 100%);
       color: rgba(250, 248, 243, 0.84);
       padding-block: 3rem 2rem;
       border-top: 1px solid rgba(201, 168, 106, 0.25);
@@ -911,7 +911,7 @@
 
     /* Breadcrumb / Page Banner for subpages */
     .subpage-banner {
-      background: linear-gradient(135deg, #3A806F 0%, #1165A5 100%);
+      background: linear-gradient(135deg, #007D10 0%, #00640D 100%);
       color: var(--ivory);
       padding-block: 2.25rem;
       border-bottom: 1.5px solid rgba(201, 168, 106, 0.35);
@@ -919,7 +919,7 @@
   
     /* OLD-LOOK 2026-11-19 — dusty-rose + sea-green from the 23 Oct site */
     .old-photo { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
-    .btn-sea { background-color: var(--teal); color: #06231C; box-shadow: 0 8px 22px -6px rgba(17, 101, 165, 0.55); }
+    .btn-sea { background-color: var(--teal); color: #06231C; box-shadow: 0 8px 22px -6px rgba(0, 125, 16, 0.55); }
     .btn-sea:hover { filter: brightness(1.06); }
     ::selection { background: var(--rose-soft); }
     /* (rose wash removed 2026-11-20: it made the hero panel note unreadable — white text on light rose; story section keeps its own rose wash) */
@@ -928,16 +928,16 @@
     body::before, body::after { content: ""; position: fixed; inset: -90px; z-index: -1; pointer-events: none; }
     body::before {
       background:
-        radial-gradient(52% 42% at 16% 20%, rgba(17,101,165,.26) 0%, rgba(17,101,165,0) 70%),
+        radial-gradient(52% 42% at 16% 20%, rgba(0,125,16,.26) 0%, rgba(0,125,16,0) 70%),
         radial-gradient(44% 36% at 82% 22%, rgba(13,78,126,.22) 0%, rgba(13,78,126,0) 70%),
-        radial-gradient(58% 46% at 64% 84%, rgba(17,101,165,.20) 0%, rgba(17,101,165,0) 70%),
+        radial-gradient(58% 46% at 64% 84%, rgba(0,125,16,.20) 0%, rgba(0,125,16,0) 70%),
         radial-gradient(30% 24% at 48% 48%, rgba(16,35,61,.05) 0%, rgba(16,35,61,0) 70%);
       animation: liquidDrift 38s ease-in-out infinite alternate;
     }
     body::after {
       background:
-        radial-gradient(40% 32% at 74% 62%, rgba(17,101,165,.24) 0%, rgba(17,101,165,0) 70%),
-        radial-gradient(46% 38% at 22% 70%, rgba(17,101,165,.21) 0%, rgba(17,101,165,0) 70%);
+        radial-gradient(40% 32% at 74% 62%, rgba(0,125,16,.24) 0%, rgba(0,125,16,0) 70%),
+        radial-gradient(46% 38% at 22% 70%, rgba(0,125,16,.21) 0%, rgba(0,125,16,0) 70%);
       animation: liquidDrift2 46s ease-in-out infinite alternate;
     }
     @keyframes liquidDrift { from { transform: translate3d(-26px,-14px,0) scale(1); } to { transform: translate3d(28px,18px,0) scale(1.05); } }
@@ -945,28 +945,28 @@
     /* dark theme: stronger orbs on navy */
     [data-theme="dark"] body::before {
       background:
-        radial-gradient(52% 42% at 16% 20%, rgba(17,101,165,.30) 0%, rgba(17,101,165,0) 70%),
+        radial-gradient(52% 42% at 16% 20%, rgba(0,125,16,.30) 0%, rgba(0,125,16,0) 70%),
         radial-gradient(44% 36% at 82% 22%, rgba(13,78,126,.27) 0%, rgba(13,78,126,0) 70%),
-        radial-gradient(58% 46% at 64% 84%, rgba(17,101,165,.22) 0%, rgba(17,101,165,0) 70%),
+        radial-gradient(58% 46% at 64% 84%, rgba(0,125,16,.22) 0%, rgba(0,125,16,0) 70%),
         radial-gradient(30% 24% at 48% 48%, rgba(16,35,61,.08) 0%, rgba(16,35,61,0) 70%);
     }
     [data-theme="dark"] body::after {
       background:
-        radial-gradient(40% 32% at 74% 62%, rgba(17,101,165,.25) 0%, rgba(17,101,165,0) 70%),
-        radial-gradient(46% 38% at 22% 70%, rgba(17,101,165,.23) 0%, rgba(17,101,165,0) 70%);
+        radial-gradient(40% 32% at 74% 62%, rgba(0,125,16,.25) 0%, rgba(0,125,16,0) 70%),
+        radial-gradient(46% 38% at 22% 70%, rgba(0,125,16,.23) 0%, rgba(0,125,16,0) 70%);
     }
     /* solid surfaces go slightly see-through so the liquid shows through (lab pattern) */
     .solid-card { background-color: rgba(255,255,255,0.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     [data-theme="dark"] .solid-card { background-color: rgba(16,35,61,0.72); }
     [data-theme="sand"] .solid-card { background-color: rgba(250,246,238,0.88); }
-    footer { background: linear-gradient(155deg, #3A806F 0%, #3A806F 55%, #2E6659 100%); }
+    footer { background: linear-gradient(155deg, #007D10 0%, #007D10 55%, #00640D 100%); }
     @media (prefers-reduced-motion: reduce) { body::before, body::after { animation: none; } }
     @media (prefers-reduced-transparency: reduce) { body::before, body::after { display: none; } .solid-card { background-color: var(--bg-surface); } }
 
     /* PREMIUM STAGE 1 2026-11-21 — reveal, marquee, floating actions, FAQ, card polish */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
     .reveal.visible { opacity: 1; transform: none; }
-    .marquee { overflow: hidden; background: linear-gradient(90deg, #3A806F, #1165A5 50%, #3A806F); border-block: 1px solid rgba(201,162,39,.45); }
+    .marquee { overflow: hidden; background: linear-gradient(90deg, #007D10, #00640D 50%, #007D10); border-block: 1px solid rgba(201,162,39,.45); }
     .marquee-track { display: flex; width: max-content; animation: marquee-scroll 32s linear infinite; padding: .75rem 0; }
     .marquee-track span { color: var(--gold); font-weight: 700; white-space: nowrap; padding: 0 1.25rem; }
     @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -1020,7 +1020,7 @@
     .wb-opts { display: flex; flex-direction: column; gap: .5rem; }
     .wb-opt { text-align: start; border: 1px solid var(--border-subtle); background: var(--bg-surface-alt); color: var(--text-primary); border-radius: 12px; padding: .7rem 1rem; cursor: pointer; font-family: inherit; font-size: .98rem; }
     .wb-opt:hover { border-color: var(--gold); background: var(--gold-soft); }
-    .wb-breath-circle { width: 180px; height: 180px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #1165A5, #1165A5 60%, #3A806F); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; box-shadow: 0 18px 34px rgba(16,35,61,.22); }
+    .wb-breath-circle { width: 180px; height: 180px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #007D10, #00640D 60%, #0B3D2E); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; box-shadow: 0 18px 34px rgba(16,35,61,.22); }
     .wb-breath-circle span { font-weight: 700; }
       /* LOGO ANIMATION v7.1 2026-11-26: gentle sheen sweep + breathing gold glow on the approved logo */
     .logo-frame {
@@ -1080,6 +1080,19 @@
       .hero-photo, .hero-photo-frame, .hero-scroll-cue .cue-chev { animation: none; }
     }
     @media (max-width: 640px) { .hero-scroll-cue { display: none; } }
+    /* KUFI SKIN v7.3 2026-11-27: square Kufic geometry + green 70 / gold 20, no blue (FINAL v7.3, live) */
+    /* Geometry: square frames and chips; the nested glass-frame + solid-card pair IS the Kufic double frame, squared and gold-lined. Circles (faces, fab, breathing) stay round. */
+    .glass-frame, .hero-glass-frame { border-radius: 6px; border-color: rgba(201, 168, 106, 0.55); }
+    .solid-card, .hero-solid-inset { border-radius: 4px; border-color: rgba(201, 168, 106, 0.30); }
+    .hero-solid-inset { background: #0B3D2E; }
+    .stat-item { background: rgba(11, 61, 46, 0.72); }
+    .stat-item, .hero-today, .old-photo, .hero-photo-wrap { border-radius: 4px; }
+    .hero-badge, .btn, .btn-gold, .btn-outline-light, .bk-chip, .fb-card { border-radius: 4px; }
+    /* Colour ratio 70/20: green dominant, gold the lines and CTAs, no blue. Navy only as text ink and the logo field. */
+    .hero-section { background: radial-gradient(circle at 18% 18%, #007D10 0%, #00640D 55%, #0B3D2E 100%); }
+    .marquee { background: linear-gradient(90deg, #007D10 0%, #00640D 100%); }
+    .subpage-banner { background: linear-gradient(135deg, #007D10 0%, #00640D 100%); }
+    .wb-breath-circle { background: radial-gradient(circle at 35% 30%, #007D10 0%, #00640D 60%, #0B3D2E 100%); }
 </style>
 <!-- ISLAH NETWORK — FINAL MERGED BUILD 2026-11-19: Design B (Calm Luxury Glass) base + Design A (Warm Editorial) story-led home & related-book references + AIDE-style dropdown booking + full bookstore. Prices verified live 19 Nov 2026. -->
 <!-- OLD-LOOK 2026-11-19: dusty-rose + sea-green + old photos applied onto merged final -->
@@ -1100,12 +1113,16 @@
 <!-- PREMIUM STAGE 2c 2026-11-21: wellbeing self-check + breathing -->
 <!-- PREMIUM STAGE 2d 2026-11-21: blog route + About gallery -->
 <!-- DULHAN PASS v6.1 2026-11-21: reveal threshold, donate-nav fix, dead-code cleanup -->
-<!-- GREEN NAV v6.2 2026-11-21 / v7.1 SWAP 2026-11-26: header/footer/banners now deep green #3A806F (blue<->green swapped) -->
+<!-- GREEN NAV v6.2 2026-11-21 / v7.1 SWAP 2026-11-26: header/footer/banners now deep green #007D10 (blue<->green swapped) -->
 <!-- COLOR+LOGO v7.0 2026-11-26: scheme 1165A5/3A806F/CBD6AF/CBD6D1/C9A86A, navy for blackish, approved logo -->
 <!-- SESSION FIX v7.0 2026-11-26: step-1 service validation (was missing) -->
 <!-- SESSION FIX 2 v7.0 2026-11-26: service placeholder option (choice now mandatory) -->
 <!-- COLOR SWAP v7.1 2026-11-26: blue and green swapped (header now green, accents blue); navy ink, gold, sage, mint, WhatsApp green unchanged; logo animated (sheen + breathe) -->
 <!-- LIVING HERO v7.2 2026-11-27: word-reveal headline, Ken Burns photo, tappable stats, today thread, scroll cue, parallax -->
+<!-- KUFI SKIN v7.3 2026-11-27: square Kufic geometry, 70 green / 20 gold / 10 blue; FINAL v7.3, live -->
+<!-- FOREST NOIR v7.3 2026-11-27: vivid green primary, black replaced by dark blue; FINAL v7.3, live -->
+<!-- BLUE 5PCT v7.3 2026-11-27: blue only as a 5% whisper in the hero flow; FINAL v7.3, live -->
+<!-- NO BLUE v7.3 2026-11-27: blue dropped; green 70 / gold 20 final; FINAL v7.3, live -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -1267,7 +1284,7 @@
             },
             {
               key: 'skill', book: 9,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'ہنر اور روزگار',
               desc: 'سلائی سینٹر اور معاشی معاونت کے پروگرامز کے ذریعے خواتین کو باعزت ہنر اور خود انحصاری کی راہ دکھانا۔'
             },
@@ -1279,7 +1296,7 @@
             },
             {
               key: 'mind', book: 6,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'ذہنی سکون اور کونسلنگ',
               desc: 'ماہر کلینکل سائیکالوجسٹ اور کونسلرز کی زیرِ نگرانی محفوظ، رازدارانہ اور باوقار نفسیاتی معاونت۔'
             }
@@ -1545,7 +1562,7 @@
             },
             {
               key: 'skill', book: 9,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'Skills & Livelihood',
               desc: 'Stitching centres and dignified economic support helping women build sustainable household resilience.'
             },
@@ -1557,7 +1574,7 @@
             },
             {
               key: 'mind', book: 6,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'Mental Peace & Counselling',
               desc: 'Confidential, compassionate psychological support led by qualified clinical psychologists and coaches.'
             }
@@ -1823,7 +1840,7 @@
             },
             {
               key: 'skill', book: 9,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'المهارات وسبل العيش',
               desc: 'مراكز الخياطة وبرامج الدعم الاقتصادي لتمكين المرأة من اكتساب حرفة كريمة.'
             },
@@ -1835,7 +1852,7 @@
             },
             {
               key: 'mind', book: 6,
-              color: '#1165A5',
+              color: '#007D10',
               title: 'السكينة النفسية والاستشارات',
               desc: 'دعم نفسي وأسري بسرية تامة بإشراف أخصائيات نفسيات ومستشارات مؤهلات.'
             }
@@ -2327,7 +2344,7 @@
         {
           num: 4, price: 952, regular: 1190, cat: 'parenting', sample: true,
           slug: 'bachay-ka-ghussa-walidain-ka-rasta',
-          palette: ['#153154', '#1165A5'],
+          palette: ['#153154', '#007D10'],
           title: { ur: 'بچے کا غصہ، والدین کا راستہ', en: 'Bachay Ka Ghussa, Walidain Ka Rasta', ar: 'غضب الطفل وطريق الوالدين' },
           question: {
             ur: '«جب بچہ ضد یا غصے کا اظہار کرے تو ڈانٹ کے بجائے سمجھداری سے کیسے سنبھالا جائے؟»',
@@ -2349,7 +2366,7 @@
         {
           num: 11, price: 792, regular: 990, cat: 'family', sample: false,
           slug: 'aik-ghar-do-naslein',
-          palette: ['#18355B', '#1165A5'],
+          palette: ['#18355B', '#007D10'],
           title: { ur: 'ایک گھر، دو نسلیں', en: 'Aik Ghar, Do Naslein', ar: 'بيت واحد وجيلان' },
           question: {
             ur: '«مشترکہ خاندان میں بزرگوں کے احترام اور نئی نسل کی ضروریات کے درمیان توازن کیسے قائم رکھا جائے؟»',
@@ -2371,7 +2388,7 @@
         {
           num: 5, price: 1592, regular: 1990, cat: 'marriage', sample: false,
           slug: 'larai-ki-jarein',
-          palette: ['#142D4E', '#1165A5'],
+          palette: ['#142D4E', '#007D10'],
           title: { ur: 'لڑائی کی جڑیں', en: 'Larai Ki Jarein', ar: 'جذور الخلاف' },
           question: {
             ur: '«بار بار دہرائے جانے والے گھریلو جھگڑوں کے پیچھے اصل جذباتی وجوہات کیا ہوتی ہیں؟»',
@@ -2393,7 +2410,7 @@
         {
           num: 10, price: 792, regular: 990, cat: 'parenting', sample: false,
           slug: 'baap-hona-kafi-nahin',
-          palette: ['#163256', '#1165A5'],
+          palette: ['#163256', '#007D10'],
           title: { ur: 'باپ ہونا کافی نہیں', en: 'Baap Hona Kafi Nahin', ar: 'أن تكون أباً لا يكفي' },
           question: {
             ur: '«صرف معاشی کفالت کے بجائے بچوں کی شخصیت میں باپ کی بامعنی اور شفیق موجودگی کیوں ضروری ہے؟»',
@@ -2428,7 +2445,7 @@
             <rect x="5" y="5" width="90" height="90" rx="14" fill="none" stroke="#C9A86A" stroke-opacity="0.55" stroke-width="1.4"/>
             <!-- Hijab Silhouette (No Facial Features) -->
             <path d="M24 94 C26 70, 34 58, 42 53 C36 45, 36 31, 44 24 C51 18, 61 19, 67 26 C73 33, 72 46, 67 54 C76 60, 82 72, 84 94 Z" fill="#1B3963" stroke="#C9A86A" stroke-width="1.5"/>
-            <path d="M46 26 C42 40, 46 54, 58 63" fill="none" stroke="#1165A5" stroke-width="1.3" stroke-opacity="0.8"/>
+            <path d="M46 26 C42 40, 46 54, 58 63" fill="none" stroke="#C9A86A" stroke-width="1.3" stroke-opacity="0.8"/>
             <circle cx="74" cy="24" r="13" fill="#0B192C" stroke="#C9A86A" stroke-width="1.2"/>
             <text x="74" y="28" text-anchor="middle" fill="#C9A86A" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">${member.initials}</text>
           </svg>
