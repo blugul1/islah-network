@@ -1055,6 +1055,31 @@
     @media (prefers-reduced-motion: reduce) {
       .logo-frame, .logo-frame::after { animation: none; }
     }
+    /* LIVING HERO v7.2 2026-11-27: word-reveal headline, Ken Burns photo, tappable stats, today thread, scroll cue, parallax */
+    .hero-headline .hw { display: inline-block; opacity: 0; animation: hw-rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+    @keyframes hw-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-photo-wrap { overflow: hidden; border-radius: 12px; }
+    .hero-photo { animation: hero-kenburns 18s ease-in-out infinite alternate; will-change: transform; }
+    @keyframes hero-kenburns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.07) translate(-1.2%, -1%); } }
+    .hero-photo-frame { animation: hero-glow 7s ease-in-out infinite; will-change: transform; }
+    @keyframes hero-glow { 0%, 100% { box-shadow: 0 24px 54px rgba(5, 12, 24, 0.45); } 50% { box-shadow: 0 24px 54px rgba(5, 12, 24, 0.45), 0 0 34px rgba(201, 168, 106, 0.28); } }
+    button.stat-item { font: inherit; color: inherit; cursor: pointer; text-align: center; transition: border-color .3s ease, background .3s ease; }
+    button.stat-item:hover { border-color: rgba(201, 168, 106, 0.6); }
+    button.stat-item.active { border-color: var(--gold); background: rgba(201, 168, 106, 0.16); }
+    button.stat-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .hero-stat-detail { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid rgba(250, 248, 243, 0.14); color: rgba(250, 248, 243, 0.92); font-size: 0.92rem; min-height: 1.6em; }
+    .hero-today { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 1.1rem; padding: 0.7rem 0.95rem; border-radius: 0.9rem; background: rgba(250, 248, 243, 0.07); border: 1px solid rgba(201, 168, 106, 0.3); border-inline-start: 3px solid var(--gold); color: var(--ivory); text-decoration: none; font-size: 0.92rem; transition: background .3s ease; }
+    .hero-today:hover { background: rgba(250, 248, 243, 0.12); }
+    .hero-today-label { color: var(--gold); font-weight: 700; white-space: nowrap; }
+    .hero-today-text { color: rgba(250, 248, 243, 0.92); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .hero-scroll-cue { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: inline-flex; flex-direction: column; align-items: center; gap: 0.15rem; background: none; border: 0; color: rgba(250, 248, 243, 0.85); font: inherit; font-size: 0.82rem; cursor: pointer; padding: 0.4rem 0.8rem; z-index: 5; }
+    .hero-scroll-cue .cue-chev { font-size: 1.1rem; line-height: 1; animation: cue-bob 2.2s ease-in-out infinite; }
+    @keyframes cue-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-headline .hw { opacity: 1; animation: none; }
+      .hero-photo, .hero-photo-frame, .hero-scroll-cue .cue-chev { animation: none; }
+    }
+    @media (max-width: 640px) { .hero-scroll-cue { display: none; } }
 </style>
 <!-- ISLAH NETWORK — FINAL MERGED BUILD 2026-11-19: Design B (Calm Luxury Glass) base + Design A (Warm Editorial) story-led home & related-book references + AIDE-style dropdown booking + full bookstore. Prices verified live 19 Nov 2026. -->
 <!-- OLD-LOOK 2026-11-19: dusty-rose + sea-green + old photos applied onto merged final -->
@@ -1080,6 +1105,7 @@
 <!-- SESSION FIX v7.0 2026-11-26: step-1 service validation (was missing) -->
 <!-- SESSION FIX 2 v7.0 2026-11-26: service placeholder option (choice now mandatory) -->
 <!-- COLOR SWAP v7.1 2026-11-26: blue and green swapped (header now green, accents blue); navy ink, gold, sage, mint, WhatsApp green unchanged; logo animated (sheen + breathe) -->
+<!-- LIVING HERO v7.2 2026-11-27: word-reveal headline, Ken Burns photo, tappable stats, today thread, scroll cue, parallax -->
 </head>
 <body>
   <a href="#main-content" class="skip-link" id="skip-link-el">مواد پر جائیں</a>
@@ -1221,10 +1247,12 @@
             ctaSecondary: 'فلاحی مشن میں حصہ لیں',
             panelTitle: 'ہمارا مقصد اور اب تک کا سفر',
             panelNote: 'بہاولپور، بھمبر، ٹیکسلا، سیالکوٹ اور آن لائن مراکز کے ذریعے خواتین کی خدمت',
+            todayLabel: 'آج فیس بک پر',
+            scrollCue: 'نیچے دیکھیں',
             stats: [
-              { num: '350', label: 'مستفید طالبات' },
-              { num: '1000+', label: 'خواتین کی معاشی معاونت' },
-              { num: '1000+', label: 'خواتین کی کونسلنگ / ذہنی صحت' }
+              { num: '350', label: 'مستفید طالبات', detail: 'اسکول، مدرسہ اور بالغ تعلیم کے ذریعے' },
+              { num: '1000+', label: 'خواتین کی معاشی معاونت', detail: 'سلائی مرکز اور ہنر کی تربیت کے ذریعے' },
+              { num: '1000+', label: 'خواتین کی کونسلنگ / ذہنی صحت', detail: 'مشاورت، تھراپی اور ڈاکٹرز ڈیسک کے ذریعے' },
             ]
           },
           pillarsTitle: 'ہمارے چار بنیادی ستون',
@@ -1497,10 +1525,12 @@
             ctaSecondary: 'Support Our Welfare Mission',
             panelTitle: 'Our Purpose & Verified Reach',
             panelNote: 'Serving women across Bahawalpur, Bhimber, Taxila, Sialkot & Online',
+            todayLabel: 'Today on Facebook',
+            scrollCue: 'Scroll to explore',
             stats: [
-              { num: '350', label: 'Beneficiary Female Students' },
-              { num: '1000+', label: 'Women Economic Support' },
-              { num: '1000+', label: 'Women Counselling / Mental Health' }
+              { num: '350', label: 'Beneficiary Female Students', detail: 'Through schools, madrassas and adult education' },
+              { num: '1000+', label: 'Women Economic Support', detail: 'Through the stitching centre and skills training' },
+              { num: '1000+', label: 'Women Counselling / Mental Health', detail: 'Through counselling, therapy and Doctors Desk' },
             ]
           },
           pillarsTitle: 'Our Four Core Pillars',
@@ -1773,10 +1803,12 @@
             ctaSecondary: 'ساهم في الرسالة الخيرية',
             panelTitle: 'رسالتنا وأثرنا الموثق',
             panelNote: 'نخدم النساء عبر مراكز بهاولبور، بهيمبر، تاكسيلا، سيالكوت وعبر الإنترنت',
+            todayLabel: 'اليوم على فيسبوك',
+            scrollCue: 'مرر إلى الأسفل',
             stats: [
-              { num: '350', label: 'طالبة مستفيدة' },
-              { num: '1000+', label: 'امرأة في الدعم الاقتصادي' },
-              { num: '1000+', label: 'امرأة في الاستشارات والصحة النفسية' }
+              { num: '350', label: 'طالبة مستفيدة', detail: 'عبر المدارس والتعليم للكبار' },
+              { num: '1000+', label: 'امرأة في الدعم الاقتصادي', detail: 'عبر مركز الخياطة والتدريب المهني' },
+              { num: '1000+', label: 'امرأة في الاستشارات والصحة النفسية', detail: 'عبر الاستشارات والعلاج ومكتب الأطباء' },
             ]
           },
           pillarsTitle: 'ركائزنا الأربع الأساسية',
@@ -2485,12 +2517,17 @@
                   <span>✦</span>
                   <span>${t.hero.badge}</span>
                 </div>
-                <h1 class="hero-headline">${t.hero.headline}</h1>
+                <h1 class="hero-headline">${t.hero.headline.split(' ').map((w, i) => `<span class="hw" style="animation-delay:${i * 90}ms">${w}</span>`).join(' ')}</h1>
                 <p class="hero-lead">${t.hero.lead}</p>
                 <div class="hero-actions">
                   <a href="#services" class="btn btn-gold" data-route="services">${t.hero.ctaPrimary}</a>
                   <a href="#donate" class="btn btn-outline-light" data-route="donate">${t.hero.ctaSecondary}</a>
                 </div>
+                ${FB_POSTS.length ? `
+                <a href="#blog" class="hero-today" data-route="blog">
+                  <span class="hero-today-label">${t.hero.todayLabel}</span>
+                  <span class="hero-today-text">${escHtml(fbExcerpt(FB_POSTS[0].text, 90))}</span>
+                </a>` : ''}
 
                 <!-- Decorative Calm Glass Panel over Solid Navy Inset for Verified Numbers -->
                 <div class="hero-glass-frame">
@@ -2500,24 +2537,29 @@
                       <span style="color:rgba(250,248,243,0.92);font-size:0.8rem;">${t.hero.panelNote}</span>
                     </div>
                     <div class="stats-grid">
-                      ${t.hero.stats.map(s => `
-                        <div class="stat-item">
+                      ${t.hero.stats.map((s, i) => `
+                        <button type="button" class="stat-item${i === 0 ? ' active' : ''}" data-stat="${i}" aria-pressed="${i === 0 ? 'true' : 'false'}">
                           <span class="stat-number" dir="ltr" data-count="${parseInt(s.num, 10)}" data-suffix="${s.num.indexOf('+') > -1 ? '+' : ''}">${s.num}</span>
                           <span class="stat-label">${s.label}</span>
-                        </div>
+                        </button>
                       `).join('')}
                     </div>
+                    <p class="hero-stat-detail" id="hero-stat-detail">${t.hero.stats[0].detail}</p>
                   </div>
                 </div>
               </div>
 
               <!-- Dignified Faceless Hijabi Sanctuary Graphic -->
-              <div class="hero-glass-frame">
+              <div class="hero-glass-frame hero-photo-frame">
                 <div class="hero-solid-inset" style="padding:0.75rem;">
-                  <img src="${OLD_PHOTOS.hero}" alt="" class="old-photo" style="aspect-ratio:4/3;" />
+                  <div class="hero-photo-wrap"><img src="${OLD_PHOTOS.hero}" alt="" class="old-photo hero-photo" style="aspect-ratio:4/3;" /></div>
                 </div>
               </div>
             </div>
+            <button type="button" class="hero-scroll-cue" data-scroll-cue>
+              <span>${t.hero.scrollCue}</span>
+              <span class="cue-chev">▾</span>
+            </button>
           </section>
 
           <!-- Premium marquee: signature programmes -->
@@ -2707,6 +2749,11 @@
         if (parts.length !== 3) return iso;
         const months = FB_MONTHS[lang] || FB_MONTHS.ur;
         return parts[2].replace(/^0/, '') + ' ' + months[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+      }
+      function fbExcerpt(text, n) {
+        const cut = String(text).slice(0, n);
+        const sp = cut.lastIndexOf(' ');
+        return (sp > 40 ? cut.slice(0, sp) : cut) + '...';
       }
       function renderBlogView(t) {
         return `
@@ -3765,6 +3812,23 @@
           faqBtn.setAttribute('aria-expanded', String(!open));
           if (ans) ans.hidden = open;
         }
+
+        const statBtn = e.target.closest('.stat-item[data-stat]');
+        if (statBtn) {
+          const idx = parseInt(statBtn.dataset.stat, 10);
+          const t = CONTENT[currentLang];
+          document.querySelectorAll('.stat-item[data-stat]').forEach((b, i) => {
+            b.classList.toggle('active', i === idx);
+            b.setAttribute('aria-pressed', String(i === idx));
+          });
+          const detailEl = document.getElementById('hero-stat-detail');
+          if (detailEl && t.hero.stats[idx]) detailEl.textContent = t.hero.stats[idx].detail;
+        }
+
+        if (e.target.closest('[data-scroll-cue]')) {
+          const mq = document.querySelector('.marquee');
+          if (mq) mq.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
 
       document.getElementById('site-search').addEventListener('input', function (e) {
@@ -3791,6 +3855,22 @@
         }, { passive: true });
         fabTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
       }
+
+      // Living hero parallax (v7.2): photo frame drifts gently with scroll; reduced-motion safe.
+      let heroParTick = false;
+      function heroParallax() {
+        heroParTick = false;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const frame = document.querySelector('.hero-photo-frame');
+        if (!frame) return;
+        const r = frame.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) { frame.style.transform = ''; return; }
+        const y = Math.max(-22, Math.min(22, (window.innerHeight / 2 - (r.top + r.height / 2)) * 0.06));
+        frame.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
+      }
+      window.addEventListener('scroll', function () {
+        if (!heroParTick) { heroParTick = true; requestAnimationFrame(heroParallax); }
+      }, { passive: true });
 
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSgModal(); });
 
